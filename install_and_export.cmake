@@ -1,4 +1,4 @@
-# install_and_export - version 1.0.1
+# install_and_export - version 1.0.1.1
 # Author: sum01 <sum01@protonmail.com>
 # Git: https://github.com/sum01/install_and_export
 #
@@ -9,7 +9,11 @@
 # install_and_export(my_exe_name)
 #
 # NOTE! When "including" your include/ folder for a lib/exe, you must use generator expressions on the include/ path.
-# Example: target_include_directories(my_exe_name PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+# ~~ Example (BOTH ARE NEEDED) ~~
+# target_include_directories(my_exe_name
+# PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+# PUBLIC $<INSTALL_INTERFACE:include>
+# )
 #
 # More reading: https://cmake.org/cmake/help/latest/prop_tgt/INTERFACE_INCLUDE_DIRECTORIES.html
 
