@@ -1,4 +1,4 @@
-# install_and_export - version 1.1.0
+# install_and_export - version 1.1.1
 # Author: sum01 <sum01@protonmail.com>
 # Git: https://github.com/sum01/install_and_export
 # Read the README.md for full info!
@@ -15,10 +15,10 @@ macro(install_and_export _INSTALL_EXPORT_TARGET)
 		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
 		# Tells it where to put your headers if any set by set_target_properties
-		PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
-		PRIVATE_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+		PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${CMAKE_PROJECT_NAME}"
+		PRIVATE_HEADER DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${CMAKE_PROJECT_NAME}"
 		# Tells export where your includes folder is
-		INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+		INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${CMAKE_PROJECT_NAME}"
 	)
 
 	# "The install(TARGETS) and install(EXPORT) commands work together to install a target and a file to help import it"
