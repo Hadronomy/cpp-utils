@@ -1,0 +1,129 @@
+/**
+ * @file cli.cc
+ * @author Pablo Hernández Jiménez (alu0101495934@ull.edu.es)
+ * @brief 
+ * @version 1.0
+ * @date 2021-12-05
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
+
+#include <algorithm>
+#include <iostream>
+#include <iomanip>
+
+#include "cli.h"
+#include "colors.h"
+
+namespace utils {
+
+void ThrowUnexpectedOptionException(const std::string& unexpected_option) {
+  std::cerr << utils::Colorize(utils::ColorTint::kRed) << utils::Colorize(utils::FontStyle::kBold);
+  std::cerr << "Unexpected " << unexpected_option << " option" << utils::Colorize::Reset << std::endl;
+  std::cerr << "--help to see the expected options" << std::endl;
+}
+
+void Cli::Parse(const int &argument_count, char* arguments[]) {
+  for (int current_arg = 1; current_arg < argument_count; ++current_arg) {
+    this->tokens_.push_back(std::string(arguments[current_arg]));
+  }
+  std::vector<std::string> pased_options;
+  std::vector<std::string> pased_arguments;
+  for (auto token : tokens_) {
+    if (token[0] == '-' && token[1] != '-') {
+      pased_options.push_back(token.substr(1, token.size() - 1));
+    } else if (token.substr(0, 2) == "--") {
+      pased_options.push_back(token.substr(2, token.size() - 1));
+    } else {
+      pased_arguments.push_back(token);
+    }
+  }
+  if (pased_options.size() > options_.size()) {
+    std::cerr << utils::Colorize(utils::ColorTint::kRed) << utils::Colorize(utils::FontStyle::kBold);
+    std::cerr << "Given more options than expected" << utils::Colorize::Reset << std::endl;
+    std::cerr << "--help to see the posible options" << std::endl;
+    throw "More options than expected";
+    return;
+  }
+  bool option_override = false;
+  for (auto pased_option : pased_options) {
+    bool is_expected_option = false;
+    for (auto expected_option : options_) {
+      if (expected_option.GetName() == pased_option || expected_option.GetAlias() == pased_option ) {
+        parsed_options_.push_back(expected_option.GetName());
+        // TODO: Improve option override
+        if (expected_option.GetName() == "help") {
+          option_override = true;
+        }
+        is_expected_option = true;
+      }
+    }
+    if (!is_expected_option) {
+      ThrowUnexpectedOptionException(pased_option);
+    }
+  }
+  if (option_override) {
+    return;
+  }
+  if (arguments_.size() != pased_arguments.size()) {
+    std::cerr << utils::Colorize(utils::ColorTint::kRed) << utils::Colorize(utils::FontStyle::kBold);
+    std::cerr << "Given more or less arguments than expected" << utils::Colorize::Reset << std::endl;
+    std::cerr << "--help to see the expected arguments" << std::endl;
+    throw "More arguments than expected";
+    return;
+  }
+  int argument_index = 0;
+  for (auto pased_argument : pased_arguments) {
+    parsed_arguments_[arguments_[argument_index].GetName()] = pased_argument;
+    ++argument_index;
+  }
+  return;
+}
+
+bool Cli::GetOption(const std::string& option_name) {
+  for (auto parsed_option : parsed_options_) {
+    if (parsed_option == option_name) {
+      return true;
+    }
+  }
+  return false;
+}
+
+std::string Cli::GetArgument(const std::string& argument_name) {
+  return parsed_arguments_[argument_name];
+}
+
+void Cli::ShowHelp() {
+  std::cout << utils::Colorize(utils::FontStyle::kBold);
+  std::cout << name_ << " v1.0.0" << std::endl;
+  std::cout << std::endl;
+
+  std::cout << utils::Colorize(utils::FontStyle::kBold);
+  std::cout << utils::Colorize(utils::FontStyle::kUnderline);
+  std::cout << "Usage" << std::endl;
+  std::cout << utils::Colorize::Reset;
+  std::cout << "  " << name_ << " [options]" << " <arguments>" << std::endl;
+  std::cout << std::endl;
+
+  std::cout << utils::Colorize(utils::FontStyle::kUnderline) << utils::Colorize(utils::FontStyle::kBold);
+  std::cout << "Arguments" << utils::Colorize::Reset << std::endl;
+  for (auto argument : arguments_) {
+    std::cout << utils::Colorize(utils::FontStyle::kBold);
+    std::cout << "  " << argument.GetName() << ": ";
+    std::cout << utils::Colorize::Reset;
+    std::cout << argument.GetDescription() << std::endl;
+  }
+
+  std::cout << std::endl;
+  std::cout << utils::Colorize(utils::FontStyle::kUnderline) << utils::Colorize(utils::FontStyle::kBold);
+  std::cout << "Options" << utils::Colorize::Reset << std::endl;
+  for (auto option : options_) {
+    std::cout << utils::Colorize(utils::FontStyle::kBold);
+    std::cout << "  " << "--" << option.GetName() << " " <<  "-" << option.GetAlias() << ": ";
+    std::cout << utils::Colorize::Reset;
+    std::cout << option.GetDescription() << std::endl;
+  }
+}
+
+}
