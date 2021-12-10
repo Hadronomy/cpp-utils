@@ -28,11 +28,11 @@ class Flag {
   Flag(std::string name, std::string alias, std::string description) : 
     name_(name), alias_(alias), description_(description_) { }
 
-  std::string GetName() {
+  std::string GetName() const {
     return name_;
   }
 
-  std::string GetDescription() {
+  std::string GetDescription() const {
     return description_;
   }
 

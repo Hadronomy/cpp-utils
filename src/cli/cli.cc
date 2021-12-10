@@ -85,7 +85,7 @@ void Cli::Parse(const int &argument_count, char* arguments[]) {
   return;
 }
 
-bool Cli::GetOption(const std::string& option_name) {
+bool Cli::GetFlag(const std::string& option_name) {
   for (auto parsed_option : parsed_options_) {
     if (parsed_option == option_name) {
       return true;
@@ -102,14 +102,12 @@ void Cli::ShowHelp() {
   std::cout << utils::Colorize(utils::FontStyle::kBold);
   std::cout << name_ << " v1.0.0" << std::endl;
   std::cout << std::endl;
-
   std::cout << utils::Colorize(utils::FontStyle::kBold);
   std::cout << utils::Colorize(utils::FontStyle::kUnderline);
   std::cout << "Usage" << std::endl;
   std::cout << utils::Colorize::Reset;
   std::cout << "  " << name_ << " [options]" << " <arguments>" << std::endl;
   std::cout << std::endl;
-
   std::cout << utils::Colorize(utils::FontStyle::kUnderline) << utils::Colorize(utils::FontStyle::kBold);
   std::cout << "Arguments" << utils::Colorize::Reset << std::endl;
   for (auto argument : arguments_) {
@@ -118,7 +116,6 @@ void Cli::ShowHelp() {
     std::cout << utils::Colorize::Reset;
     std::cout << argument.GetDescription() << std::endl;
   }
-
   std::cout << std::endl;
   std::cout << utils::Colorize(utils::FontStyle::kUnderline) << utils::Colorize(utils::FontStyle::kBold);
   std::cout << "Options" << utils::Colorize::Reset << std::endl;

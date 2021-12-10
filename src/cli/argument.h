@@ -28,11 +28,11 @@ class Argument {
   Argument(std::string name, std::string description) : 
     name_(name), description_(description) { }
 
-  std::string GetName() {
+  std::string GetName() const {
     return name_;
   }
 
-  std::string GetDescription() {
+  std::string GetDescription() const {
     return description_;
   }
  private:
