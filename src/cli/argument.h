@@ -28,13 +28,24 @@ class Argument {
   Argument(std::string name, std::string description) : 
     name_(name), description_(description) { }
 
+  /**
+   * @brief Get the Name
+   * 
+   * @return std::string 
+   */
   std::string GetName() const {
     return name_;
   }
 
+  /**
+   * @brief Get the Description
+   * 
+   * @return std::string 
+   */
   std::string GetDescription() const {
     return description_;
   }
+  
  private:
   Argument();
 

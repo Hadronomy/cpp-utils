@@ -20,20 +20,6 @@
 
 namespace utils {
 
-void ThrowUnexpectedOptionException(const std::string& unexpected_option) {
-  std::cerr << utils::Colorize(utils::ColorTint::kRed) << utils::Colorize(utils::FontStyle::kBold);
-  std::cerr << "Unexpected " << unexpected_option << " option" << utils::Colorize::Reset << std::endl;
-  std::cerr << "--help to see the expected options" << std::endl;
-  throw "Unexpected";
-}
-
-void ThrowParseException(const std::string& error_message) {
-  std::cerr << utils::Colorize(utils::ColorTint::kRed) << utils::Colorize(utils::FontStyle::kBold);
-  std::cerr << error_message << utils::Colorize::Reset << std::endl;
-  std::cerr << "--help to see learn about the correct use of this command" << std::endl;
-  throw ParseException(error_message);
-}
-
 void Cli::Parse(const int &argument_count, char* arguments[]) {
   for (int current_arg = 1; current_arg < argument_count; ++current_arg) {
     tokens_.push_back(std::string(arguments[current_arg]));
@@ -125,6 +111,20 @@ void Cli::ShowHelp() {
     std::cout << utils::Colorize::Reset;
     std::cout << option.GetDescription() << std::endl;
   }
+}
+
+void Cli::ThrowUnexpectedOptionException(const std::string& unexpected_option) {
+  std::cerr << utils::Colorize(utils::ColorTint::kRed) << utils::Colorize(utils::FontStyle::kBold);
+  std::cerr << "Unexpected " << unexpected_option << " option" << utils::Colorize::Reset << std::endl;
+  std::cerr << "--help to see the expected options" << std::endl;
+  throw "Unexpected";
+}
+
+void Cli::ThrowParseException(const std::string& error_message) {
+  std::cerr << utils::Colorize(utils::ColorTint::kRed) << utils::Colorize(utils::FontStyle::kBold);
+  std::cerr << error_message << utils::Colorize::Reset << std::endl;
+  std::cerr << "--help to see learn about the correct use of this command" << std::endl;
+  throw ParseException(error_message);
 }
 
 }

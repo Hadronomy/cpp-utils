@@ -68,6 +68,10 @@ class Cli {
  private:
   Cli();
 
+  void ThrowUnexpectedOptionException(const std::string& unexpected_option);
+
+  void ThrowParseException(const std::string& error_message);
+
   std::vector<std::string> tokens_;
 
   std::string name_;
