@@ -18,8 +18,8 @@
 #include <string>
 #include <map>
 
-#include "argument.h"
-#include "option.h"
+#include "cli/argument.h"
+#include "cli/flag.h"
 
 namespace utils {
 
@@ -29,11 +29,8 @@ namespace utils {
  */
 class Cli {
  public:
-  Cli(std::string name, std::vector<Argument> arguments, std::vector<Flag> options) {
-    name_ = name;
-    arguments_ = arguments;
-    options_ = options;
-  }
+  Cli(std::string name, std::vector<Argument> arguments, std::vector<Flag> options) : 
+    name_(name), arguments_(arguments), options_(options) { }
 
   /**
    * @brief Parses the execution arguments based on the cli expected arguments and
@@ -69,6 +66,8 @@ class Cli {
   bool GetOption(const std::string& name);
 
  private:
+  Cli();
+
   std::vector<std::string> tokens_;
 
   std::string name_;

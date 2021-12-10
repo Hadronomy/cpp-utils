@@ -11,11 +11,11 @@
 
 #pragma once
 
-#include <chrono>
-#include <stack>
-
 #ifndef LIB_HOURGLASS
 #define LIB_HOURGLASS
+
+#include <chrono>
+#include <stack>
 
 namespace utils {
 
@@ -43,11 +43,12 @@ class Hourglass {
    * @return double 
    */
   double Elapsed() const;
-
- private:
-  Hourglass();
   
  private:
+#pragma region Constructors
+  Hourglass();
+#pragma endregion
+
   static std::stack<Hourglass> timers_;
 
   using clock_t = std::chrono::high_resolution_clock;

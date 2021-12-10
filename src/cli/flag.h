@@ -25,11 +25,8 @@ namespace utils {
  */
 class Flag {
  public:
-  Flag(std::string name, std::string alias, std::string description) {
-    name_ = name;
-    description_ = description;
-    alias_ = alias;
-  }
+  Flag(std::string name, std::string alias, std::string description) : 
+    name_(name), alias_(alias), description_(description_) { }
 
   std::string GetName() {
     return name_;
@@ -43,10 +40,11 @@ class Flag {
     return alias_;
   }
  private:
+  Flag();
+
   std::string name_;
   std::string description_;
   std::string alias_;
-
 };
 
 } // namespace utils

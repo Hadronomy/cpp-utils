@@ -12,17 +12,11 @@
 
 #pragma once
 
-#include <limits>
-#include <string>
-#include <map>
-#include <vector>
-
-#include "utils/hourglass.h"
-#include "utils/colors.h"
-#include "utils/cli.h"
-
 #ifndef LIB_UTILS_H
 #define LIB_UTILS_H
+
+#include <limits>
+#include <string>
 
 namespace utils {
 

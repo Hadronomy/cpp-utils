@@ -25,10 +25,8 @@ namespace utils {
  */
 class Argument {
  public:
-  Argument(std::string name, std::string description) {
-    name_ = name;
-    description_ = description;
-  }
+  Argument(std::string name, std::string description) : 
+    name_(name), description_(description) { }
 
   std::string GetName() {
     return name_;
@@ -38,6 +36,8 @@ class Argument {
     return description_;
   }
  private:
+  Argument();
+
   std::string name_;
   std::string description_;
 };

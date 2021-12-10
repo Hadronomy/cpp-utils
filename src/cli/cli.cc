@@ -16,7 +16,7 @@
 
 #include "cli.h"
 #include "colors.h"
-#include "exceptions.h"
+#include "misc/exceptions.h"
 
 namespace utils {
 
@@ -36,27 +36,27 @@ void ThrowParseException(const std::string& error_message) {
 
 void Cli::Parse(const int &argument_count, char* arguments[]) {
   for (int current_arg = 1; current_arg < argument_count; ++current_arg) {
-    this->tokens_.push_back(std::string(arguments[current_arg]));
+    tokens_.push_back(std::string(arguments[current_arg]));
   }
-  std::vector<std::string> pased_options;
+  std::vector<std::string> pased_flags;
   std::vector<std::string> pased_arguments;
   for (auto token : tokens_) {
     if (token[0] == '-' && token[1] != '-') {
-      pased_options.push_back(token.substr(1, token.size() - 1));
+      pased_flags.push_back(token.substr(1, token.size() - 1));
     } else if (token.substr(0, 2) == "--") {
-      pased_options.push_back(token.substr(2, token.size() - 1));
+      pased_flags.push_back(token.substr(2, token.size() - 1));
     } else {
       pased_arguments.push_back(token);
     }
   }
-  if (pased_options.size() > options_.size()) {
+  if (pased_flags.size() > options_.size()) {
     ThrowParseException("More options than expected");
   }
   bool option_override = false;
-  for (auto pased_option : pased_options) {
+  for (auto pased_flag : pased_flags) {
     bool is_expected_option = false;
     for (auto expected_option : options_) {
-      if (expected_option.GetName() == pased_option || expected_option.GetAlias() == pased_option ) {
+      if (expected_option.GetName() == pased_flag || expected_option.GetAlias() == pased_flag ) {
         parsed_options_.push_back(expected_option.GetName());
         // TODO: Improve option override
         if (expected_option.GetName() == "help") {
@@ -66,7 +66,7 @@ void Cli::Parse(const int &argument_count, char* arguments[]) {
       }
     }
     if (!is_expected_option) {
-      ThrowUnexpectedOptionException(pased_option);
+      ThrowUnexpectedOptionException(pased_flag);
     }
   }
   if (option_override) {

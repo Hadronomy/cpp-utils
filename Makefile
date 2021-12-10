@@ -3,7 +3,7 @@ VERSION = 14
 CXXFLAGS = -std=c++$(VERSION) -Wall -g
 INCLUDEDIR = src
 OUTDIR = bin
-CPPFLAGS = -I.
+CPPFLAGS = -I./includes -I./src
 DEPS = $(shell find $(INCLUDEDIR) -type f -name '*.cc')
 TARGETS = $(basename $(notdir $(wildcard test/*.cc)))
 

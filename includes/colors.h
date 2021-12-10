@@ -11,14 +11,18 @@
 
 #pragma once
 
-#include <iostream>
-#include <string>
-
 #ifndef LIB_COLORS_H
 #define LIB_COLORS_H
 
+#include <iostream>
+#include <string>
+
 namespace utils {
 
+/**
+ * @brief Font colors identifiers for console logging
+ * 
+ */
 enum class ColorTint {
   kReset = 0,
   kBlack = 30,
@@ -31,6 +35,10 @@ enum class ColorTint {
   kWhite = 37
 };
 
+/**
+ * @brief Font styles identifiers for console logging
+ * 
+ */
 enum class FontStyle {
   kBold = 1,
   kUnderline = 4,
@@ -47,14 +55,13 @@ class Colorize {
   std::string complete_code_;
 
  public:
-  Colorize(ColorTint color) : value_(static_cast<int>(color)) {
-  }
-  Colorize(FontStyle style) : value_(static_cast<int>(style)) {
-  }
-  Colorize(unsigned char code) : value_(static_cast<int>(code)) {
-  }
-  Colorize(std::string comple_code) : complete_code_(comple_code) {
-  }
+  Colorize(ColorTint color) : value_(static_cast<int>(color)) { }
+
+  Colorize(FontStyle style) : value_(static_cast<int>(style)) { }
+
+  Colorize(unsigned char code) : value_(static_cast<int>(code)) { }
+
+  Colorize(std::string comple_code) : complete_code_(comple_code) { }
 
  public:
   static std::ostream &Reset(std::ostream &out);
