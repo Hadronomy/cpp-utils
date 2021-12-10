@@ -56,14 +56,14 @@ class Cli {
   std::string GetArgument(const std::string& name);
 
   /**
-   * @brief Returns true if the option with name %name
+   * @brief Returns true if the flag with name %name
    * was defined
    * 
-   * @param name The name of the option to search
+   * @param name The name of the flag to search
    * @return true 
    * @return false 
    */
-  bool GetOption(const std::string& name);
+  bool GetFlag(const std::string& name);
 
  private:
   Cli();
