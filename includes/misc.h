@@ -12,8 +12,8 @@
 
 #pragma once
 
-#ifndef LIB_UTILS_H
-#define LIB_UTILS_H
+#ifndef LIB_UTILS_MISC_
+#define LIB_UTILS_MISC_
 
 #include <limits>
 #include <string>

@@ -11,8 +11,8 @@
 
 #pragma once
 
-#ifndef LIB_COLORS_H
-#define LIB_COLORS_H
+#ifndef LIB_UTILS_COLORS_
+#define LIB_UTILS_COLORS_
 
 #include <iostream>
 #include <string>

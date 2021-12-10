@@ -11,8 +11,8 @@
 
 #pragma once
 
-#ifndef LIB_HOURGLASS
-#define LIB_HOURGLASS
+#ifndef LIB_UTILS_HOURGLASS_
+#define LIB_UTILS_HOURGLASS_
 
 #include <chrono>
 #include <stack>
@@ -60,4 +60,4 @@ class Hourglass {
 
 }
 
-#endif
+#endif  //  LIB_UTILS_HOURGLASS_
