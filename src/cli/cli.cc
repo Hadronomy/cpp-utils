@@ -21,6 +21,8 @@
 namespace utils {
 
 void Cli::Parse(const int &argument_count, char* arguments[]) {
+  binary_ = arguments[0];
+  AddDefaultFlags();
   for (int current_arg = 1; current_arg < argument_count; ++current_arg) {
     tokens_.push_back(std::string(arguments[current_arg]));
   }
@@ -35,29 +37,47 @@ void Cli::Parse(const int &argument_count, char* arguments[]) {
       pased_arguments.push_back(token);
     }
   }
-  if (pased_flags.size() > options_.size()) {
-    ThrowParseException("More options than expected");
-  }
-  bool option_override = false;
-  for (auto pased_flag : pased_flags) {
-    bool is_expected_option = false;
-    for (auto expected_option : options_) {
-      if (expected_option.GetName() == pased_flag || expected_option.GetAlias() == pased_flag ) {
-        parsed_options_.push_back(expected_option.GetName());
-        // TODO: Improve option override
-        if (expected_option.GetName() == "help") {
-          option_override = true;
-        }
-        is_expected_option = true;
-      }
-    }
-    if (!is_expected_option) {
-      ThrowUnexpectedOptionException(pased_flag);
-    }
-  }
-  if (option_override) {
+  ParseFlags(pased_flags);
+  if (overriding_flags_.size() > 0) {
     return;
   }
+  ParseArguments(pased_arguments);
+  is_parsed_ = true;
+}
+
+void Cli::AddDefaultFlags() {
+  Flag help("help", "h", "Shows the command information", true);
+  Flag verbose("verbose", "v", "Explains whats being done", false);
+  flags_.push_back(help);
+  flags_.push_back(verbose);
+  return;
+}
+
+void Cli::ParseFlags(const std::vector<std::string>& pased_flags) {
+  if (pased_flags.size() > flags_.size()) {
+    ThrowParseException("More flags than expected");
+  }
+  for (auto pased_flag : pased_flags) {
+    bool is_expected_flag = false;
+    for (auto expected_flag : flags_) {
+      if (expected_flag.GetName() == pased_flag || expected_flag.GetAlias() == pased_flag ) {
+        parsed_flags_.push_back(expected_flag.GetName());
+        if (pased_flag == "help") {
+          ShowHelp();
+        }
+        if (expected_flag.IsOverriding()) {
+          overriding_flags_.push_back(expected_flag.GetName());
+        }
+        is_expected_flag = true;
+      }
+    }
+    if (!is_expected_flag) {
+      ThrowUnexpectedFlagException(pased_flag);
+    }
+  }
+}
+
+void Cli::ParseArguments(const std::vector<std::string>& pased_arguments) {
   if (arguments_.size() < pased_arguments.size()) {
     ThrowParseException("More arguments than expected");
   } else if (arguments_.size() > pased_arguments.size()) {
@@ -71,20 +91,20 @@ void Cli::Parse(const int &argument_count, char* arguments[]) {
   return;
 }
 
-bool Cli::GetFlag(const std::string& option_name) {
-  for (auto parsed_option : parsed_options_) {
-    if (parsed_option == option_name) {
+bool Cli::GetFlag(const std::string& flag_name) const {
+  for (auto parsed_flag : parsed_flags_) {
+    if (parsed_flag == flag_name) {
       return true;
     }
   }
   return false;
 }
 
-std::string Cli::GetArgument(const std::string& argument_name) {
-  return parsed_arguments_[argument_name];
+std::string Cli::GetArgument(const std::string& argument_name) const {
+  return parsed_arguments_.at(argument_name);
 }
 
-void Cli::ShowHelp() {
+void Cli::ShowHelp() const {
   std::cout << utils::Colorize(utils::FontStyle::kBold);
   std::cout << name_ << " v1.0.0" << std::endl;
   std::cout << std::endl;
@@ -92,7 +112,11 @@ void Cli::ShowHelp() {
   std::cout << utils::Colorize(utils::FontStyle::kUnderline);
   std::cout << "Usage" << std::endl;
   std::cout << utils::Colorize::Reset;
-  std::cout << "  " << name_ << " [options]" << " <arguments>" << std::endl;
+  std::cout << "  " << binary_ << " [flags]";
+  for (auto argument : arguments_) {
+    std::cout << " <" << argument.GetName() << ">";
+  }
+  std::cout << std::endl;
   std::cout << std::endl;
   std::cout << utils::Colorize(utils::FontStyle::kUnderline) << utils::Colorize(utils::FontStyle::kBold);
   std::cout << "Arguments" << utils::Colorize::Reset << std::endl;
@@ -104,27 +128,27 @@ void Cli::ShowHelp() {
   }
   std::cout << std::endl;
   std::cout << utils::Colorize(utils::FontStyle::kUnderline) << utils::Colorize(utils::FontStyle::kBold);
-  std::cout << "Options" << utils::Colorize::Reset << std::endl;
-  for (auto option : options_) {
+  std::cout << "Flags" << utils::Colorize::Reset << std::endl;
+  for (auto flag : flags_) {
     std::cout << utils::Colorize(utils::FontStyle::kBold);
-    std::cout << "  " << "--" << option.GetName() << " " <<  "-" << option.GetAlias() << ": ";
+    std::cout << "  " << "--" << flag.GetName() << " " <<  "-" << flag.GetAlias() << ": ";
     std::cout << utils::Colorize::Reset;
-    std::cout << option.GetDescription() << std::endl;
+    std::cout << flag.GetDescription() << std::endl;
   }
 }
 
-void Cli::ThrowUnexpectedOptionException(const std::string& unexpected_option) {
+void Cli::ThrowUnexpectedFlagException(const std::string& unexpected_flag) {
   std::cerr << utils::Colorize(utils::ColorTint::kRed) << utils::Colorize(utils::FontStyle::kBold);
-  std::cerr << "Unexpected " << unexpected_option << " option" << utils::Colorize::Reset << std::endl;
-  std::cerr << "--help to see the expected options" << std::endl;
-  throw "Unexpected";
+  std::cerr << "Unexpected " << unexpected_flag << " flag" << utils::Colorize::Reset << std::endl;
+  std::cerr << "Try " << binary_ << " --help to see the expected flags" << std::endl;
+  exit(EXIT_FAILURE);
 }
 
 void Cli::ThrowParseException(const std::string& error_message) {
   std::cerr << utils::Colorize(utils::ColorTint::kRed) << utils::Colorize(utils::FontStyle::kBold);
   std::cerr << error_message << utils::Colorize::Reset << std::endl;
-  std::cerr << "--help to see learn about the correct use of this command" << std::endl;
-  throw ParseException(error_message);
+  std::cerr << "Try " << binary_ << " --help to learn about the correct use of this command" << std::endl;
+  exit(EXIT_FAILURE);
 }
 
 }

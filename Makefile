@@ -15,6 +15,9 @@ lib: libutils.a
 libutils.a: $(DEPS)
 	ar rcs $@ $^
 
+test: test/main.cc $(DEPS)
+	$(CXX) $(CXXFLAGS) -o bin/$@ $^ $(CPPFLAGS)
+
 .PHONY: clean
 
 clean :

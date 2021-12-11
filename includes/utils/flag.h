@@ -25,8 +25,12 @@ namespace utils {
  */
 class Flag {
  public:
+  Flag(std::string name, std::string alias, std::string description, bool is_overriding) : 
+    name_(name), alias_(alias), description_(description), is_overriding_(is_overriding) { }
   Flag(std::string name, std::string alias, std::string description) : 
     name_(name), alias_(alias), description_(description) { }
+  Flag(std::string name, std::string description, bool is_overriding = false) :
+    name_(name), description_(description), is_overriding_(is_overriding) { }
 
   std::string GetName() const {
     return name_;
@@ -36,15 +40,21 @@ class Flag {
     return description_;
   }
 
-  std::string GetAlias() {
+  std::string GetAlias() const {
     return alias_;
   }
+
+  bool IsOverriding() const {
+    return is_overriding_;
+  }
+
  private:
   Flag();
 
   std::string name_;
   std::string alias_;
   std::string description_;
+  bool is_overriding_;
 };
 
 } // namespace utils

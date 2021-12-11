@@ -29,8 +29,10 @@ namespace utils {
  */
 class Cli {
  public:
-  Cli(std::string name, std::vector<Argument> arguments, std::vector<Flag> options) : 
-    name_(name), arguments_(arguments), options_(options) { }
+  Cli(std::string name, std::vector<Argument> arguments, std::vector<Flag> flags) : 
+    name_(name), arguments_(arguments), flags_(flags) { }
+  Cli(std::string name, std::vector<Argument> arguments) : 
+    name_(name), arguments_(arguments) { }
 
   /**
    * @brief Parses the execution arguments based on the cli expected arguments and
@@ -45,7 +47,7 @@ class Cli {
    * @brief Prints this cli help to the standard output
    * 
    */
-  void ShowHelp();
+  void ShowHelp() const;
 
   /**
    * @brief Gets the value passed as an argument of name %name
@@ -53,7 +55,7 @@ class Cli {
    * @param name The name of the argument to look for
    * @return std::string The argument value
    */
-  std::string GetArgument(const std::string& name);
+  std::string GetArgument(const std::string& name) const;
 
   /**
    * @brief Returns true if the flag with name %name
@@ -63,23 +65,41 @@ class Cli {
    * @return true 
    * @return false 
    */
-  bool GetFlag(const std::string& name);
+  bool GetFlag(const std::string& name) const;
+
+  /**
+   * @brief Returns true if the Parse method has been called
+   * 
+   * @return true 
+   * @return false 
+   */
+  bool IsParsed() const;
 
  private:
   Cli();
 
-  void ThrowUnexpectedOptionException(const std::string& unexpected_option);
+  void ParseFlags(const std::vector<std::string>& pased_flags);
+  
+  void ParseArguments(const std::vector<std::string>& pased_arguments);
+
+  void AddDefaultFlags();
+
+  void ThrowUnexpectedFlagException(const std::string& unexpected_option);
 
   void ThrowParseException(const std::string& error_message);
 
+  std::string binary_;
   std::vector<std::string> tokens_;
 
   std::string name_;
   std::vector<Argument> arguments_;
-  std::vector<Flag> options_;
+  std::vector<Flag> flags_;
 
   std::map<std::string, std::string> parsed_arguments_;
-  std::vector<std::string> parsed_options_;
+  std::vector<std::string> parsed_flags_;
+  std::vector<std::string> overriding_flags_;
+
+  bool is_parsed_;
 };
 
 }
