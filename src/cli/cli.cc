@@ -14,8 +14,8 @@
 #include <iomanip>
 #include <exception>
 
-#include "utils/cli.h"
-#include "utils/colors.h"
+#include "cli.h"
+#include "colors.h"
 #include "misc/exceptions.h"
 
 namespace utils {

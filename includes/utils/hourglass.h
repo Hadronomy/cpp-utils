@@ -45,9 +45,7 @@ class Hourglass {
   double Elapsed() const;
   
  private:
-#pragma region Constructors
   Hourglass();
-#pragma endregion
 
   static std::stack<Hourglass> timers_;
 

@@ -18,8 +18,8 @@
 #include <string>
 #include <map>
 
-#include "cli/argument.h"
-#include "cli/flag.h"
+#include "argument.h"
+#include "flag.h"
 
 namespace utils {
 

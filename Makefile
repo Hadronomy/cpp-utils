@@ -3,20 +3,21 @@ VERSION = 14
 CXXFLAGS = -std=c++$(VERSION) -Wall -g
 INCLUDEDIR = src
 OUTDIR = bin
-CPPFLAGS = -I./includes -I./src
-DEPS = $(shell find $(INCLUDEDIR) -type f -name '*.cc')
+OBJDIR = obj
+CPPFLAGS = -I./includes/utils -I./src
+DEPS = $(addsuffix .o, $(basename $(shell find $(INCLUDEDIR) -type f -name '*.cc')))
 TARGETS = $(basename $(notdir $(wildcard test/*.cc)))
 
-default_target: all
+default_target: lib
 
-all: clean $(TARGETS)
+lib: libutils.a
 
-%: test/%.o $(DEPS)
-	mkdir -p bin
-	$(CXX) $(CXXFLAGS) $(USER_DEFINES) -o $(OUTDIR)/$@ $^ $(CPPFLAGS)
+libutils.a: $(DEPS)
+	ar rcs $@ $^
 
-.PHONY: all clean tar
+.PHONY: clean
 
 clean :
 	rm -fr bin
+	find . -name *.o -type f -delete
 	mkdir bin

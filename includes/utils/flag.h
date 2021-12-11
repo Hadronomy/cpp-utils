@@ -26,7 +26,7 @@ namespace utils {
 class Flag {
  public:
   Flag(std::string name, std::string alias, std::string description) : 
-    name_(name), alias_(alias), description_(description_) { }
+    name_(name), alias_(alias), description_(description) { }
 
   std::string GetName() const {
     return name_;
@@ -43,8 +43,8 @@ class Flag {
   Flag();
 
   std::string name_;
-  std::string description_;
   std::string alias_;
+  std::string description_;
 };
 
 } // namespace utils
