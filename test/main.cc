@@ -1,7 +1,7 @@
 
 #include <iostream>
 
-#include "colors.h"
+#include "utils/colors.h"
 
 int main() {
 	std::cout << utils::Colorize(utils::ColorTint::kYellow) << utils::Colorize(utils::FontStyle::kBold);

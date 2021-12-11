@@ -11,7 +11,7 @@ default_target: all
 
 all: clean $(TARGETS)
 
-%: test/%.cc $(DEPS)
+%: test/%.o $(DEPS)
 	mkdir -p bin
 	$(CXX) $(CXXFLAGS) $(USER_DEFINES) -o $(OUTDIR)/$@ $^ $(CPPFLAGS)
 
