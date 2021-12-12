@@ -38,9 +38,6 @@ void Cli::Parse(const int &argument_count, char* arguments[]) {
     }
   }
   ParseFlags(pased_flags);
-  if (overriding_flags_.size() > 0) {
-    return;
-  }
   ParseArguments(pased_arguments);
   is_parsed_ = true;
 }
@@ -74,6 +71,9 @@ void Cli::ParseFlags(const std::vector<std::string>& pased_flags) {
     if (!is_expected_flag) {
       ThrowUnexpectedFlagException(pased_flag);
     }
+    if (overriding_flags_.size() > 0) {
+      exit(EXIT_SUCCESS);
+    }
   }
 }
 
@@ -92,6 +92,9 @@ void Cli::ParseArguments(const std::vector<std::string>& pased_arguments) {
 }
 
 bool Cli::GetFlag(const std::string& flag_name) const {
+  if (!is_parsed_) {
+    ThrowParseException("Getting flag before parsing");
+  }
   for (auto parsed_flag : parsed_flags_) {
     if (parsed_flag == flag_name) {
       return true;
@@ -101,6 +104,9 @@ bool Cli::GetFlag(const std::string& flag_name) const {
 }
 
 std::string Cli::GetArgument(const std::string& argument_name) const {
+  if (!is_parsed_) {
+    ThrowParseException("Getting argument before parsing");
+  }
   return parsed_arguments_.at(argument_name);
 }
 
@@ -137,14 +143,14 @@ void Cli::ShowHelp() const {
   }
 }
 
-void Cli::ThrowUnexpectedFlagException(const std::string& unexpected_flag) {
+void Cli::ThrowUnexpectedFlagException(const std::string& unexpected_flag) const {
   std::cerr << utils::Colorize(utils::ColorTint::kRed) << utils::Colorize(utils::FontStyle::kBold);
   std::cerr << "Unexpected " << unexpected_flag << " flag" << utils::Colorize::Reset << std::endl;
   std::cerr << "Try " << binary_ << " --help to see the expected flags" << std::endl;
   exit(EXIT_FAILURE);
 }
 
-void Cli::ThrowParseException(const std::string& error_message) {
+void Cli::ThrowParseException(const std::string& error_message) const {
   std::cerr << utils::Colorize(utils::ColorTint::kRed) << utils::Colorize(utils::FontStyle::kBold);
   std::cerr << error_message << utils::Colorize::Reset << std::endl;
   std::cerr << "Try " << binary_ << " --help to learn about the correct use of this command" << std::endl;

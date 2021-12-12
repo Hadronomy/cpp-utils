@@ -29,9 +29,9 @@ namespace utils {
  */
 class Cli {
  public:
-  Cli(std::string name, std::vector<Argument> arguments, std::vector<Flag> flags) : 
+  Cli(std::string name, std::string description, std::vector<Argument> arguments, std::vector<Flag> flags) : 
     name_(name), arguments_(arguments), flags_(flags) { }
-  Cli(std::string name, std::vector<Argument> arguments) : 
+  Cli(std::string name, std::string description, std::vector<Argument> arguments) : 
     name_(name), arguments_(arguments) { }
 
   /**
@@ -84,14 +84,15 @@ class Cli {
 
   void AddDefaultFlags();
 
-  void ThrowUnexpectedFlagException(const std::string& unexpected_option);
+  void ThrowUnexpectedFlagException(const std::string& unexpected_option) const;
 
-  void ThrowParseException(const std::string& error_message);
+  void ThrowParseException(const std::string& error_message) const;
 
   std::string binary_;
   std::vector<std::string> tokens_;
 
   std::string name_;
+  std::string description_;
   std::vector<Argument> arguments_;
   std::vector<Flag> flags_;
 

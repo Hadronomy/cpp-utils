@@ -27,8 +27,8 @@ class Flag {
  public:
   Flag(std::string name, std::string alias, std::string description, bool is_overriding) : 
     name_(name), alias_(alias), description_(description), is_overriding_(is_overriding) { }
-  Flag(std::string name, std::string alias, std::string description) : 
-    name_(name), alias_(alias), description_(description) { }
+  Flag(std::string name, std::string alias, const char* description) : 
+    name_(name), alias_(alias), description_(std::string(description)) { }
   Flag(std::string name, std::string description, bool is_overriding = false) :
     name_(name), description_(description), is_overriding_(is_overriding) { }
 
