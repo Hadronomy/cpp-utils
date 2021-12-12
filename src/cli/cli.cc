@@ -29,7 +29,7 @@ void Cli::Parse(const int &argument_count, char* arguments[]) {
   std::vector<std::string> pased_flags;
   std::vector<std::string> pased_arguments;
   for (auto token : tokens_) {
-    if (token[0] == '-' && token[1] != '-' && !std::isdigit(token[1])) {
+    if (token[0] == '-' && token[1] != '-' && !std::isdigit(token[1]) && std::isalpha(token[1])) {
       pased_flags.push_back(token.substr(1, token.size() - 1));
     } else if (token.substr(0, 2) == "--") {
       pased_flags.push_back(token.substr(2, token.size() - 1));
