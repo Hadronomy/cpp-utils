@@ -71,6 +71,25 @@ int SumOfNLastDigits(const int& input_number, const int& number_of_digits);
  */
 int CountDigits(const int& input_number);
 
+/**
+ * @brief Returns true if the input char is alpha
+ * 
+ * @param input_char 
+ * @return true 
+ * @return false 
+ */
+bool IsAlpha(const char input_char);
+
+/**
+ * @brief Returns true if the input char is an alpha
+ * uppercase char
+ * 
+ * @param input_char 
+ * @return true 
+ * @return false 
+ */
+bool IsUppercase(const char input_char);
+
 }  // namespace utils
 
 #endif //  LIB_UTILS_H
