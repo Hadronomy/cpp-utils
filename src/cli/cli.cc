@@ -114,6 +114,8 @@ void Cli::ShowHelp() const {
   std::cout << utils::Colorize(utils::FontStyle::kBold);
   std::cout << name_ << " v1.0.0" << std::endl;
   std::cout << std::endl;
+  std::cout << description_;
+  std::cout << std::endl;
   std::cout << utils::Colorize(utils::FontStyle::kBold);
   std::cout << utils::Colorize(utils::FontStyle::kUnderline);
   std::cout << "Usage" << std::endl;
