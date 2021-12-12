@@ -30,9 +30,9 @@ namespace utils {
 class Cli {
  public:
   Cli(std::string name, std::string description, std::vector<Argument> arguments, std::vector<Flag> flags) : 
-    name_(name), arguments_(arguments), flags_(flags) { }
+    name_(name), description_(description), arguments_(arguments), flags_(flags) { }
   Cli(std::string name, std::string description, std::vector<Argument> arguments) : 
-    name_(name), arguments_(arguments) { }
+    name_(name), description_(description), arguments_(arguments) { }
 
   /**
    * @brief Parses the execution arguments based on the cli expected arguments and
