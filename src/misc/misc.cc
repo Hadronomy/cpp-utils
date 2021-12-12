@@ -71,4 +71,20 @@ int CountDigits(const int& input_number) {
   return log10(input_number) + 1;
 }
 
+bool IsAlpha(const char input_char) {
+  if (input_char >= 'a' && input_char <= 'z') {
+    return true;
+  } else if (input_char >= 'A' && input_char <= 'Z') {
+    return true;
+  }
+  return false;
+}
+
+bool IsUppercase(const char input_char) {
+  if (input_char >= 'A' && input_char <= 'Z') {
+    return true;
+  }
+  return false;
+}
+
 }
