@@ -5,6 +5,8 @@ project(utils
 	LANGUAGES CXX)
 set(CMAKE_C_STANDARD 17)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
+
 file(GLOB_RECURSE SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "src/*.cc")
 
 add_library(utils ${SOURCES})
@@ -14,6 +16,8 @@ target_include_directories(
 	PUBLIC includes/utils
 	PRIVATE includes src
 )
+
+add_executable(test test/main.cc ${SOURCES})
 
 include_directories(
 	includes
