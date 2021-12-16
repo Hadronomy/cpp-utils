@@ -9,6 +9,12 @@ file(GLOB_RECURSE SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "src/*.cc")
 
 add_library(utils ${SOURCES})
 
+target_include_directories(
+	utils
+	PUBLIC includes/utils
+	PRIVATE includes src
+)
+
 include_directories(
 	includes
 	includes/utils
