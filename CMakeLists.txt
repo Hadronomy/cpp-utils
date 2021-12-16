@@ -3,7 +3,7 @@ project(utils
 	VERSION 1.0
 	DESCRIPTION "A little usefull library for c++"
 	LANGUAGES CXX)
-set(CMAKE_C_STANDARD 14)
+set(CMAKE_C_STANDARD 17)
 
 file(GLOB_RECURSE SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "src/*.cc")
 
