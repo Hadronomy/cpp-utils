@@ -33,6 +33,8 @@ class Cli {
     name_(name), description_(description), arguments_(arguments), flags_(flags) { }
   Cli(std::string name, std::string description, std::vector<Argument> arguments) : 
     name_(name), description_(description), arguments_(arguments) { }
+  Cli(std::string name, std::string description) :
+    name_(name), description_(description) { }
 
   /**
    * @brief Parses the execution arguments based on the cli expected arguments and
