@@ -20,6 +20,14 @@
 
 namespace utils {
 
+struct default_t {
+ public:
+  template<typename T>
+  operator T() const { return T(); }
+};
+
+const default_t kDefault = default_t();
+
 /**
 * @brief Returns true if the passed values overflows it's allowed size
 * @tparam TNumeric

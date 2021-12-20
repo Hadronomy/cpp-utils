@@ -142,14 +142,16 @@ void Command::ShowHelp() const {
 void Command::ThrowUnexpectedFlagException(const std::string& unexpected_flag) const {
   std::cerr << utils::Colorize(utils::ColorTint::kRed) << utils::Colorize(utils::FontStyle::kBold);
   std::cerr << "Unexpected " << unexpected_flag << " flag" << utils::Colorize::Reset << std::endl;
-  std::cerr << "Try " << binary_ << " --help to see the expected flags" << std::endl;
+  std::cerr << "Try " << utils::Colorize(utils::FontStyle::kBold) << binary_  << " --help" << utils::Colorize::Reset;
+  std::cerr << " to see the expected flags" << std::endl;
   exit(EXIT_FAILURE);
 }
 
 void Command::ThrowParseException(const std::string& error_message) const {
   std::cerr << utils::Colorize(utils::ColorTint::kRed) << utils::Colorize(utils::FontStyle::kBold);
   std::cerr << error_message << utils::Colorize::Reset << std::endl;
-  std::cerr << "Try " << binary_ << " --help to learn about the correct use of this command" << std::endl;
+  std::cerr << "Try " << utils::Colorize(utils::FontStyle::kBold) << binary_ << " --help" << utils::Colorize::Reset;
+  std::cerr << " to see the expected arguments" << std::endl;
   exit(EXIT_FAILURE);
 }
 

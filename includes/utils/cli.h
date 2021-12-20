@@ -44,6 +44,8 @@ class Cli : Command {
   void Parse(const int arg_count, char* pased_args[]);
 
   using Command::GetArgument;
+  using Command::GetOption;
+  using Command::GetFlag;
 };
 
 }

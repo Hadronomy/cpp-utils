@@ -22,6 +22,7 @@
 #include "flag.h"
 #include "argument.h"
 #include "constexpr.h"
+#include "misc.h"
 
 namespace utils
 {
@@ -44,19 +45,22 @@ namespace utils
 
     void ShowHelp() const;
 
-    template <typename TReturn>
+    template<typename TReturn>
     inline TReturn GetArgument(const std::string& argument_name) const {
       return GetTypedFromList<TReturn>(parsed_arguments_, argument_name);
     }
 
-    template <typename TReturn>
+    template<typename TReturn>
     inline TReturn GetOption(const std::string& option_name) const {
       return GetTypedFromList<TReturn>(parsed_options_, option_name);
     }
 
-    template <typename TReturn>
+    template<typename TReturn>
     inline TReturn GetTypedFromList(const std::map<std::string, std::string>& list, const std::string& key) const {
       static_assert(utils::is_standard<TReturn>::value, "Return type must be a primitive type or a string");
+      if (!list.count(key)) {
+        return kDefault;
+      }
       std::string argument = list.at(key);
       if (std::is_same<TReturn, std::string>::value) {
         std::stringstream value_string(argument);
