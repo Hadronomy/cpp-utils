@@ -5,7 +5,6 @@
 
 #include "colors.h"
 #include "cli.h"
-#include "command.h"
 #include "lists.h"
 
 int main(int arg_count, char* pased_args[]) {

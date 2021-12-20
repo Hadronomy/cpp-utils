@@ -18,9 +18,9 @@
 #include <string>
 #include <map>
 
-#include "command.h"
-#include "argument.h"
-#include "flag.h"
+#include "cli/command.h"
+#include "cli/argument.h"
+#include "cli/flag.h"
 
 namespace utils {
 

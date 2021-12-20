@@ -11,8 +11,8 @@
 
 #include <iostream>
 
+#include "cli/command.h"
 #include "colors.h"
-#include "command.h"
 #include "constexpr.h"
 
 namespace utils {
