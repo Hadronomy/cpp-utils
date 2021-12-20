@@ -29,7 +29,7 @@ void Command::CreateLookup() {
 }
 
 void Command::AddDefaults() {
-  flags_.push_back(utils::Flag("help", "h" "Show detailed information about the use of the utility", true));
+  flags_.push_back(utils::Flag("help", "h", "Show detailed information about the use of the utility", true));
   flags_.push_back(utils::Flag("verbose", "v", "Print to the stderr what's being done", false));
   return;
 }
@@ -133,7 +133,7 @@ void Command::ShowHelp() const {
   std::cout << "Flags" << utils::Colorize::Reset << std::endl;
   for (auto flag : flags_) {
     std::cout << utils::Colorize(utils::FontStyle::kBold);
-    std::cout << "  " << "--" << flag.GetName() << " " <<  "-" << flag.GetAlias() << ": ";
+    std::cout << "  " << "--" << flag.GetName() <<  " -" << flag.GetAlias() << ": ";
     std::cout << utils::Colorize::Reset;
     std::cout << flag.GetDescription() << std::endl;
   }
