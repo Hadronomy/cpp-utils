@@ -1,2 +1,0 @@
-/bin/ar qc libutils.a  CMakeFiles/utils.dir/src/cli/cli.cc.o CMakeFiles/utils.dir/src/colors/colors.cc.o CMakeFiles/utils.dir/src/hourglass/hourglass.cc.o CMakeFiles/utils.dir/src/misc/misc.cc.o
-/bin/ranlib libutils.a
