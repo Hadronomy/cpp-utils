@@ -26,7 +26,7 @@
 
 namespace utils
 {
-
+  
 class Command {
  public:
   Command(std::string name, std::string description, std::vector<Argument> arguments, std::vector<Argument> options, std::vector<Flag> flags) :
@@ -46,11 +46,17 @@ class Command {
 
   template<typename TReturn>
   inline TReturn GetArgument(const std::string& argument_name) const {
+    if (!is_parsed_) {
+      HandleGetBeforeParse();
+    }
     return GetTypedFromList<TReturn>(parsed_arguments_, argument_name);
   }
 
   template<typename TReturn>
   inline TReturn GetOption(const std::string& option_name) const {
+    if (!is_parsed_) {
+      HandleGetBeforeParse();
+    }
     return GetTypedFromList<TReturn>(parsed_options_, option_name);
   }
 
@@ -73,9 +79,13 @@ class Command {
       value_string >> value;
       return value;
     }
+    return kDefault;
   }
 
   inline bool GetFlag(const std::string& flag_name) const {
+    if (!is_parsed_) {
+      HandleGetBeforeParse();
+    }
     return parsed_flags_.count(flag_name) > 0;
   }
 
@@ -95,7 +105,7 @@ class Command {
   std::vector<Flag> flags_;
 
   std::string binary_;
-  bool is_parsed_ = false;
+  bool is_parsed_{false};
 
   std::map<std::string, Token> lookup_flags_;
   std::map<std::string, Token> lookup_options_;
@@ -114,9 +124,11 @@ class Command {
 
   bool IsFlag(const std::string &token, std::string &name);
 
-  void ThrowUnexpectedFlagException(const std::string &unexpected_flag) const;
+  void HandleUnexpectedFlag(const std::string &unexpected_flag) const;
 
-  void ThrowParseException(const std::string &error_message) const;
+  void HandleError(const std::string &error_message) const;
+
+  void HandleGetBeforeParse() const;
 };
 
 }

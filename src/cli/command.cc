@@ -76,7 +76,7 @@ void Command::ParseCommand(const int arg_count, char* provided_args[]) {
       }
       continue;
     } else if (IsOption(current_argument, name) && lookup_options_.count(name) == 0) {
-      ThrowUnexpectedFlagException(current_argument);
+      HandleUnexpectedFlag(current_argument);
     }
     bool is_option = IsOption(current_argument, name);
     if (is_option && lookup_options_.count(name)) {
@@ -88,10 +88,10 @@ void Command::ParseCommand(const int arg_count, char* provided_args[]) {
       continue;
     } else if (is_option) {
       std::string error_message = "Unexpected " + current_argument + " option";
-      ThrowParseException(error_message);
+      HandleError(error_message);
     }
     if (position_argument_index >= arguments_.size()) {
-      ThrowParseException("More arguments than expected");
+      HandleError("More arguments than expected");
     }
     std::string positional_argument_name = arguments_[position_argument_index].GetName();
     parsed_arguments_[positional_argument_name] = args_.front();
@@ -99,7 +99,7 @@ void Command::ParseCommand(const int arg_count, char* provided_args[]) {
     args_.pop();
   }
   if (position_argument_index < arguments_.size()) {
-    ThrowParseException("Less arguments than expected");
+    HandleError("Less arguments than expected");
   }
   SetParsed(true);
 }
@@ -139,7 +139,7 @@ void Command::ShowHelp() const {
   }
 }
 
-void Command::ThrowUnexpectedFlagException(const std::string& unexpected_flag) const {
+void Command::HandleUnexpectedFlag(const std::string& unexpected_flag) const {
   std::cerr << utils::Colorize(utils::ColorTint::kRed) << utils::Colorize(utils::FontStyle::kBold);
   std::cerr << "Unexpected " << unexpected_flag << " flag" << utils::Colorize::Reset << std::endl;
   std::cerr << "Try " << utils::Colorize(utils::FontStyle::kBold) << binary_  << " --help" << utils::Colorize::Reset;
@@ -147,11 +147,17 @@ void Command::ThrowUnexpectedFlagException(const std::string& unexpected_flag) c
   exit(EXIT_FAILURE);
 }
 
-void Command::ThrowParseException(const std::string& error_message) const {
+void Command::HandleError(const std::string& error_message) const {
   std::cerr << utils::Colorize(utils::ColorTint::kRed) << utils::Colorize(utils::FontStyle::kBold);
   std::cerr << error_message << utils::Colorize::Reset << std::endl;
   std::cerr << "Try " << utils::Colorize(utils::FontStyle::kBold) << binary_ << " --help" << utils::Colorize::Reset;
   std::cerr << " to see the expected arguments" << std::endl;
+  exit(EXIT_FAILURE);
+}
+
+void Command::HandleGetBeforeParse() const {
+  std::cerr << utils::Colorize(utils::ColorTint::kRed) << utils::Colorize(utils::FontStyle::kBold);
+  std::cerr << "Trying to get value before parsing" << utils::Colorize::Reset << std::endl;
   exit(EXIT_FAILURE);
 }
 
