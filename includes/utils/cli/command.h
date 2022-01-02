@@ -19,10 +19,10 @@
 #include <type_traits>
 #include <sstream>
 
+#include "utils/constexpr.h"
+#include "utils/misc.h"
 #include "flag.h"
 #include "argument.h"
-#include "constexpr.h"
-#include "misc.h"
 
 namespace utils
 {
