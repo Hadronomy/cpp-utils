@@ -17,7 +17,7 @@ target_include_directories(
 	PRIVATE src includes/utils
 )
 
-if (${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_SOURCE_DIR}})
+if (${CMAKE_PROJECT_NAME} STREQUAL ${PROJECT_NAME})
   add_executable(runTests test/main.cc ${SOURCES})
 endif()
 
