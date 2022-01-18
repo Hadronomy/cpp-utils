@@ -2,23 +2,24 @@
 #include <iostream>
 #include <map>
 #include <iomanip>
+#include <chrono>
+#include <thread>
 
 #include "colors.h"
 #include "cli.h"
+#include "hourglass.h"
 #include "lists.h"
 
 int main(int arg_count, char* pased_args[]) {
   utils::Cli cli(
-		"hello",
-		"Just saying hello world", {
-			utils::Argument("hello", "ups")
-		}, {
-			utils::Argument("world", "ups")
-		}
+		"Example",
+		"Example program"
 	);
-	//cli.Parse(arg_count, pased_args);
-	auto hello = cli.GetArgument<std::string>("hello");
-	auto world = cli.GetOption<std::string>("world");
-	std::cout << hello << " " << world << std::endl;
+	cli.Parse(arg_count, pased_args);
+	utils::Hourglass::Start();
+	for (int i = 0; i < 100; ++i) {
+
+	}
+	std::cout << utils::Hourglass::Stop();
 	return 0;
 }

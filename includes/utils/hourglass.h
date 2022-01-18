@@ -16,6 +16,7 @@
 
 #include <chrono>
 #include <stack>
+#include <iostream>
 
 namespace utils {
 
@@ -28,6 +29,8 @@ class Hourglass {
   static void Start();
   static Hourglass Stop();
   double Elapsed() const;
+
+  friend std::ostream& operator<<(std::ostream& out, const Hourglass& hourglass);
  private:
   Hourglass() : start_(clock_t::now()) { }
   static std::stack<Hourglass> timers_;

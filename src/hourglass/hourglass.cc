@@ -13,6 +13,7 @@
 #include <stack>
 
 #include "hourglass.h"
+#include "colors.h"
 
 namespace utils {
 
@@ -44,6 +45,18 @@ Hourglass Hourglass::Stop() {
  */
 double Hourglass::Elapsed() const {
   return std::chrono::duration_cast<second_t>(end_ - start_).count();
+}
+
+/**
+ * @brief Insertion operator for the hourglass class
+ * 
+ * @param out 
+ * @param hourglass 
+ * @return std::ostream& 
+ */
+std::ostream& operator<<(std::ostream& out, const Hourglass& hourglass) {
+  out << "Elapsed " << Colorize(FontStyle::kBold) << hourglass.Elapsed() << " ms";
+  return out;
 }
 
 }
