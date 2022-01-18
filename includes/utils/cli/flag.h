@@ -17,13 +17,15 @@
 #include <vector>
 #include <string>
 
+#include "token.h"
+
 namespace utils {
 
 /**
  * @brief Defines the basic data structure of a cli option
  * 
  */
-class Flag {
+class Flag : public Token {
  public:
   Flag(std::string name, std::string alias, std::string description, bool is_overriding) : 
     name_(name), alias_(alias), description_(description), is_overriding_(is_overriding) { }

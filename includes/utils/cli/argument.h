@@ -17,13 +17,15 @@
 #include <vector>
 #include <string>
 
+#include "token.h"
+
 namespace utils {
 
 /**
  * @brief Defines the basic data structure of a cli argument
  * 
  */
-class Argument {
+class Argument : public Token {
  public:
   Argument(std::string name, std::string description) : 
     name_(name), description_(description) { }
