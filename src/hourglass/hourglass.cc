@@ -18,14 +18,18 @@ namespace utils {
 
 std::stack<Hourglass> Hourglass::timers_;
 
+/**
+ * @brief Registers a new hourglass
+ * 
+ */
 void Hourglass::Start() {
   timers_.push(Hourglass());
 }
 
-Hourglass::Hourglass() {
-  start_ = clock_t::now();
-}
-
+/**
+   * @brief Stops the most recently started hourglass and returns it 
+   * @return Hourglass 
+   */
 Hourglass Hourglass::Stop() {
   Hourglass ending_timer = timers_.top();
   ending_timer.end_ = clock_t::now();
@@ -33,6 +37,11 @@ Hourglass Hourglass::Stop() {
   return ending_timer;
 }
 
+
+/**
+ * @brief Returns the elapsed from starting the hourglass and ending it
+ * @return double 
+ */
 double Hourglass::Elapsed() const {
   return std::chrono::duration_cast<second_t>(end_ - start_).count();
 }

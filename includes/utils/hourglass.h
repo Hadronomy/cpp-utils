@@ -25,28 +25,11 @@ namespace utils {
  */
 class Hourglass {
  public:
-  /**
-   * @brief Starts the hourglass,
-   * this will add a new hourglass to the active timers.
-   * 
-   */
   static void Start();
-
-  /**
-   * @brief Stops the most recently started hourglass and returns it 
-   * @return Hourglass 
-   */
   static Hourglass Stop();
-
-  /**
-   * @brief Returns the elapsed from starting the hourglass and ending it
-   * @return double 
-   */
   double Elapsed() const;
-  
  private:
-  Hourglass();
-
+  Hourglass() : start_(clock_t::now()) { }
   static std::stack<Hourglass> timers_;
 
   using clock_t = std::chrono::high_resolution_clock;
