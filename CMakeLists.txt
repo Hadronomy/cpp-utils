@@ -44,10 +44,10 @@ if (DEFINED CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 			STATUS
 			"CMAKE_INSTALL_PREFIX is not set\n"
 			"Default value: ${CMAKE_INSTALL_PREFIX}\n"
-			"Will set it to ${CMAKE_SOURCE_DIR}/install"
+			"Will set it to /usr/local"
 	)
 	set(CMAKE_INSTALL_PREFIX
-		"${CMAKE_SOURCE_DIR}/install"
+		"/usr/local"
 		CACHE PATH "Where the library will be installed to" FORCE
 	)
 else()
