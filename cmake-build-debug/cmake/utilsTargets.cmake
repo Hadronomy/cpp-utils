@@ -16,7 +16,7 @@ set(CMAKE_IMPORT_FILE_VERSION 1)
 set(_targetsDefined)
 set(_targetsNotDefined)
 set(_expectedTargets)
-foreach(_expectedTarget utils::utils)
+foreach(_expectedTarget Hadronomy::utils)
   list(APPEND _expectedTargets ${_expectedTarget})
   if(NOT TARGET ${_expectedTarget})
     list(APPEND _targetsNotDefined ${_expectedTarget})
@@ -41,16 +41,16 @@ unset(_targetsNotDefined)
 unset(_expectedTargets)
 
 
-# Create imported target utils::utils
-add_library(utils::utils STATIC IMPORTED)
+# Create imported target Hadronomy::utils
+add_library(Hadronomy::utils STATIC IMPORTED)
 
-set_target_properties(utils::utils PROPERTIES
+set_target_properties(Hadronomy::utils PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "/home/hadronomy/repos/cpp-utils/include"
 )
 
-# Import target "utils::utils" for configuration "Debug"
-set_property(TARGET utils::utils APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
-set_target_properties(utils::utils PROPERTIES
+# Import target "Hadronomy::utils" for configuration "Debug"
+set_property(TARGET Hadronomy::utils APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
+set_target_properties(Hadronomy::utils PROPERTIES
   IMPORTED_LINK_INTERFACE_LANGUAGES_DEBUG "CXX"
   IMPORTED_LOCATION_DEBUG "/home/hadronomy/repos/cpp-utils/cmake-build-debug/libutilsd.a"
   )

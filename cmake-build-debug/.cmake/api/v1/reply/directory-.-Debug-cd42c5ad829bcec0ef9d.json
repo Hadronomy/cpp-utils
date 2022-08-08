@@ -131,7 +131,7 @@
 		{
 			"backtrace" : 7,
 			"component" : "Unspecified",
-			"destination" : ".cmake",
+			"destination" : "cmake",
 			"exportName" : "utilsTargets",
 			"exportTargets" : 
 			[
@@ -142,7 +142,7 @@
 			],
 			"paths" : 
 			[
-				"CMakeFiles/Export/.cmake/utilsTargets.cmake"
+				"CMakeFiles/Export/cmake/utilsTargets.cmake"
 			],
 			"type" : "export"
 		},

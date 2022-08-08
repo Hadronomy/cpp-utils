@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.11)
-set(namespace "utils")
+set(namespace "Hadronomy")
 project(utils
 	VERSION 0.1.0
 	DESCRIPTION "A little usefull library for c++"
@@ -84,7 +84,7 @@ install(TARGETS ${PROJECT_NAME}
 install(EXPORT "${PROJECT_NAME}Targets"
 		FILE "${PROJECT_NAME}Targets.cmake"
 		NAMESPACE ${namespace}::
-		DESTINATION .cmake)
+		DESTINATION cmake)
 
 include(CMakePackageConfigHelpers)
 
