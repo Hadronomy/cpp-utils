@@ -14,8 +14,8 @@
 #include <iomanip>
 #include <cmath>
 
-#include "misc.h"
-#include "colors.h"
+#include "utils/misc.h"
+#include "utils/colors.h"
 
 namespace utils {
 

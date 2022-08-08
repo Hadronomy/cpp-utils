@@ -13,7 +13,7 @@
 #include <functional>
 #include <vector>
 
-#include "lists.h"
+#include "utils/lists.h"
 
 template<class TKey, class TValue, class TContent>
 std::map<TKey, TValue> BuildMap(const std::vector<TContent>& input_vector, std::function<TKey(TContent content)> key_func, 

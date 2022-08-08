@@ -1,6 +1,6 @@
 /**
  * @file utils.h
- * @author Pablo Hernández Jiménez (alu0101495934@ull.edu.es)
+ * @author Pablo Hernández Jiménez
  * @brief Defines a series of utility functions that are repeatedly used in
  * this project
  * @version 1.0

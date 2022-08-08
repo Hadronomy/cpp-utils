@@ -1,6 +1,6 @@
 /**
  * @file hourglass.h
- * @author Pablo Hernández Jiménez (alu0101495934@ull.edu.es)
+ * @author Pablo Hernández Jiménez
  * @brief 
  * @version 1.0
  * @date 2021-11-14
@@ -28,7 +28,7 @@ class Hourglass {
  public:
   static void Start();
   static Hourglass Stop();
-  double Elapsed() const;
+  [[nodiscard]] double Elapsed() const;
 
   friend std::ostream& operator<<(std::ostream& out, const Hourglass& hourglass);
  private:

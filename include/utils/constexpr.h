@@ -1,6 +1,6 @@
 /**
  * @file primitive.h
- * @author Pablo Hernández Jiménez (alu0101495934@ull.edu.es)
+ * @author Pablo Hernández Jiménez
  * @brief 
  * @version 1.0
  * @date 2021-12-16

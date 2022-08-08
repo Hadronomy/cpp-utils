@@ -12,8 +12,8 @@
 #include <chrono>
 #include <stack>
 
-#include "hourglass.h"
-#include "colors.h"
+#include "utils/hourglass.h"
+#include "utils/colors.h"
 
 namespace utils {
 
