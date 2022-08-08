@@ -9,7 +9,9 @@
 
 int main() {
   utils::Hourglass::Start();
+#ifdef UTILS
   std::cout << utils::Colorize(utils::ColorTint::kCyan) << "Hello World! " << utils::Colorize::Reset << std::endl;
+#endif
   std::cout << utils::Hourglass::Stop();
   return 0;
 }
