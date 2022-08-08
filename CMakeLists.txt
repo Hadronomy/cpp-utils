@@ -19,7 +19,7 @@ message(STATUS "Found sources: ${SOURCES}")
 
 add_library(${PROJECT_NAME} STATIC)
 # Add compiler definitions for the library
-string(TOUPPER ${PROJECT_NAME} CAPS_PROJECT_NAME)
+string(TOUPPER "${PROJECT_NAME}_LIB" CAPS_PROJECT_NAME)
 target_compile_definitions(${PROJECT_NAME} PUBLIC ${CAPS_PROJECT_NAME})
 
 
