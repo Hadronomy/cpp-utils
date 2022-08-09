@@ -10,12 +10,6 @@ add_executable(${PROJECT_NAME} main.cc)
 
 include(FetchContent)
 
-FetchContent_Declare(
-        utils
-        GIT_REPOSITORY https://github.com/hadronomy/cpp-utils.git
-)
+find_package(utils CONFIG REQUIRED)
 
-FetchContent_MakeAvailable(utils)
-# find_package(utils CONFIG REQUIRED)
-
-target_link_libraries(${PROJECT_NAME} utils)
+target_link_libraries(${PROJECT_NAME} Hadronomy::utils)
