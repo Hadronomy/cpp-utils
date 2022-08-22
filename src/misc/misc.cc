@@ -10,7 +10,6 @@
  */
 
 #include <iostream>
-#include <limits>
 #include <iomanip>
 #include <cmath>
 
@@ -85,6 +84,10 @@ bool IsUppercase(const char input_char) {
     return true;
   }
   return false;
+}
+
+void WaitForEnter() {
+  std::cin.get();
 }
 
 }
