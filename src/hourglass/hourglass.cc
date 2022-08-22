@@ -44,7 +44,7 @@ Hourglass Hourglass::Stop() {
  * @return double 
  */
 double Hourglass::Elapsed() const {
-  return std::chrono::duration_cast<second_t>(end_ - start_).count();
+  return std::chrono::duration_cast<milli_t>(end_ - start_).count();
 }
 
 /**

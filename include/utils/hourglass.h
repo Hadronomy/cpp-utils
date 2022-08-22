@@ -36,7 +36,7 @@ class Hourglass {
   static std::stack<Hourglass> timers_;
 
   using clock_t = std::chrono::high_resolution_clock;
-  using second_t = std::chrono::duration<double, std::ratio<1>>;
+  using milli_t = std::chrono::duration<double, std::milli>;
 
   std::chrono::time_point<clock_t> start_;
   std::chrono::time_point<clock_t> end_;
