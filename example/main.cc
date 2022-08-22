@@ -29,6 +29,9 @@ int main() {
   std::cout << utils::Hourglass::Stop() << std::endl;
   auto wp = ShoutingPerson();
   wp.Shout();
+  utils::Hourglass::Start();
+  std::cout << utils::Colorize(utils::ColorTint::kCyan) << "Hello World! " << utils::Colorize::Reset << std::endl;
+  std::cout << utils::Hourglass::Stop() << std::endl;
   std::cout << "Press enter to exit";
   utils::WaitForEnter();
   return 0;
