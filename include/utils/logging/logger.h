@@ -9,6 +9,7 @@
 
 #include <vector>
 #include <memory>
+#include <cstdarg>
 
 #include "message.h"
 #include "transport.h"
@@ -19,19 +20,20 @@ class LoggerMessage;
 
 class Logger {
  public:
-  template<class TTransport>
-  inline Logger& AddTransport() {
-    static_assert(std::is_base_of_v<TTransport, TerminalTransport>);
-    transports_.emplace_back(new TTransport);
+  template<class TTransport, typename... Args>
+  inline Logger& AddTransport(Args... args) {
+    static_assert(std::is_base_of_v<BaseTransport, TTransport>);
+    transports_.emplace_back(std::make_shared<TTransport>(args...));
     return *this;
   }
+  Logger& Init();
   void FlagAsDefault() const;
   void Log(const LoggerMessage& msg);
 
   static Logger GetDefault();
 
  private:
-  std::vector<TerminalTransport*> transports_;
+  std::vector<std::shared_ptr<BaseTransport>> transports_;
 };
 
 static Logger s_default_logger_ = Logger();

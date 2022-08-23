@@ -22,17 +22,17 @@ void ShoutingPerson::Shout() {
 int main() {
   utils::Logger()
     .AddTransport<TerminalTransport>()
+    .AddTransport<FileTransport>("/home/hadronomy/utils-log")
+    .Init()
     .FlagAsDefault();
   utils::Hourglass::Start();
-  std::cout << utils::Colorize(utils::ColorTint::kCyan) << "Hello World! ";
-  std::cout << utils::Colorize::Reset << std::endl;
-  std::cout << utils::Hourglass::Stop() << std::endl;
+  LOG(INFO) << utils::Colorize(utils::FontStyle::kBold);
+  LOG(INFO) << utils::Colorize(utils::ColorTint::kCyan) << "Hello World! ";
+  LOG(INFO) << utils::Colorize::Reset << std::endl;
+  LOG(INFO) << utils::Hourglass::Stop() << std::endl;
+  utils::Hourglass::Start();
   auto wp = ShoutingPerson();
   wp.Shout();
-  utils::Hourglass::Start();
-  std::cout << utils::Colorize(utils::ColorTint::kCyan) << "Hello World! " << utils::Colorize::Reset << std::endl;
-  std::cout << utils::Hourglass::Stop() << std::endl;
-  std::cout << "Press enter to exit";
-  utils::WaitForEnter();
+  LOG(INFO) << utils::Hourglass::Stop();
   return 0;
 }

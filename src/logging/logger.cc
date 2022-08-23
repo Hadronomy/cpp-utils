@@ -17,9 +17,16 @@ Logger Logger::GetDefault() {
 }
 
 void Logger::Log(const LoggerMessage &msg) {
-  for (auto transport : transports_) {
+  for (auto& transport : transports_) {
     transport->Log(msg.str());
   }
+}
+
+Logger& Logger::Init() {
+  for (auto& transport : transports_) {
+    transport->Init();
+  }
+  return *this;
 }
 
 } // utils

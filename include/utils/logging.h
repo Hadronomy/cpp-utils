@@ -20,7 +20,11 @@
 
 namespace utils {
 
-#define LOG_INFO utils::LoggerMessage(0).flush()
-#define LOG(level) LOG_##level
+#define LOG(level) utils::LoggerMessage(level).flush()
+
+#define ERROR 0
+#define WARN 1
+#define INFO 2
+#define VERBOSE 3
 
 } // utils
