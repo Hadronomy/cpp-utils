@@ -13,6 +13,7 @@
 #include <GLFW/glfw3.h>
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
+#include <imgui_stdlib.h>
 #include <imgui_impl_opengl3.h>
 
 void ShowDocking();
@@ -88,6 +89,9 @@ int RenderGUI() {
   SetupTheme(io);
   ImVec4 background_color = ImVec4(0.0f, 0.0f, 0.0f, 1.00f);
   LOG(INFO) << "Initialized\t" << utils::Hourglass::Stop().Elapsed() << "ms" << std::endl;
+  std::fstream tty;
+  std::string tty_path = "/dev/pts/0";
+  std::string msg;
   while (!glfwWindowShouldClose(window)) {
     glfwPollEvents();
     // Start the Dear ImGui frame
@@ -96,6 +100,19 @@ int RenderGUI() {
     ImGui::NewFrame();
     ShowDocking();
     ShowRightPanel();
+    ImGui::Begin("TTY");
+    ImGui::InputText("TTY", &tty_path);
+    ImGui::InputText("Message", &msg);
+    if (ImGui::Button("Connect")) {
+      tty.close();
+      tty.open(tty_path);
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("Send") && tty.is_open()) {
+      tty << msg << std::endl;
+      tty.flush();
+    }
+    ImGui::End();
     // Rendering
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -117,6 +134,7 @@ int RenderGUI() {
   ImGui::DestroyContext();
   glfwDestroyWindow(window);
   glfwTerminate();
+  tty.close();
   return 0;
 }
 
@@ -149,6 +167,7 @@ void ShowDocking() {
 void ShowRightPanel() {
   ImGui::Begin("Tools");
   ImGui::End();
+
 }
 
 void SetupTheme(const ImGuiIO& io) {
