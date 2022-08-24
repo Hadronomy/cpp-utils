@@ -100,9 +100,16 @@ int RenderGUI() {
     ImGui::NewFrame();
     ShowDocking();
     ShowRightPanel();
+
     ImGui::Begin("TTY");
-    ImGui::InputText("TTY", &tty_path);
-    ImGui::InputText("Message", &msg);
+
+    ImGui::Text("TTY");
+    ImGui::SameLine();
+    ImGui::InputText("##",&tty_path);
+
+    ImGui::Text("Message");
+    ImGui::SameLine();
+    ImGui::InputText("##", &msg);
     if (ImGui::Button("Connect")) {
       tty.close();
       tty.open(tty_path);
