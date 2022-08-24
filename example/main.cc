@@ -21,6 +21,8 @@ void ShowRightPanel();
 
 void SetupTheme(const ImGuiIO&);
 
+int RenderGUI();
+
 static void glfw_error_callback(int error, const char* description)
 {
   LOG(ERROR) << "glfw Error "<< error << ": " << description;
@@ -32,6 +34,10 @@ int main() {
     .AddTransport<FileTransport>("/home/hadronomy/utils-log")
     .Init()
     .FlagAsDefault();
+  return RenderGUI();
+}
+
+int RenderGUI() {
   utils::Hourglass::Start();
   // Window setup
   glfwSetErrorCallback(glfw_error_callback);
