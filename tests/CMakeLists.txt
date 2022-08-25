@@ -1,6 +1,6 @@
 project(${CMAKE_PROJECT_NAME})
 
-set(EXE_NAME ${CMAKE_PROJECT_NAME}_test)
+set(EXE_NAME ${PROJECT_SHORTNAME}_test)
 add_executable(${EXE_NAME})
 
 file(GLOB_RECURSE SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.cc")
@@ -22,7 +22,7 @@ endif()
 
 target_link_libraries(
         ${EXE_NAME}
-        utils
+        Hadronomy::cpputils
         GTest::gtest_main
 )
 

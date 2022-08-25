@@ -47,7 +47,7 @@ install(TARGETS ${PROJECT_NAME}
 
 install(EXPORT "${PROJECT_NAME}Targets"
         FILE "${PROJECT_NAME}Targets.cmake"
-        NAMESPACE ${namespace}::
+        NAMESPACE ${PROJECT_NAMESPACE}::
         DESTINATION cmake)
 
 include(CMakePackageConfigHelpers)
@@ -71,7 +71,7 @@ install(FILES
 
 export(EXPORT "${PROJECT_NAME}Targets"
         FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}Targets.cmake"
-        NAMESPACE ${namespace}::)
+        NAMESPACE ${PROJECT_NAMESPACE}::)
 
 # uninstall target
 if(NOT TARGET uninstall)
