@@ -44,10 +44,16 @@ bool HasOverflow(const TNumeric& value_to_check) {
 
 /**
  * @brief Prints a prettified prompt message
- * (Doesn't interact with cin)
+ * (Doesn't interact with cin)s
  * @param prompt 
  */
 void PrintAskPrompt(const std::string& prompt);
+
+/**
+ * @brief Waits for the user to press enter
+ * NOTE: It doesn't print anything
+ */
+void WaitForEnter();
 
 /**
  * @brief Returns if the input_number is natural
