@@ -9,6 +9,8 @@
 
 #include <string>
 
+#include "logging.h"
+
 namespace utils {
 
 #ifdef __FUNCDNAME__
@@ -22,6 +24,7 @@ namespace utils {
 
 #define FILE_NAME (__builtin_strrchr(__FILE__, '/') ? __builtin_strrchr(__FILE__, '/') + 1 : __FILE__)
 #define SFUNCTION (__builtin_strrchr(UTILS_FUNCSIGN, ' ') ? __builtin_strrchr(UTILS_FUNCSIGN, ' ') + 1 : UTILS_FUNCSIGN)
+
 
 } // utils
 
