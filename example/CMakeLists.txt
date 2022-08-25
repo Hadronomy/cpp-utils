@@ -20,9 +20,10 @@ add_executable(${PROJECT_NAME} main.cc)
 #
 # FetchContent_MakeAvailable(utils)
 find_package(OpenGL REQUIRED)
-find_package(glfw3 REQUIRED)
+find_package(glfw NAMES glfw glfw3 REQUIRED)
 add_subdirectory(thirdparty/imgui)
-target_link_libraries(${PROJECT_NAME} Hadronomy::cpputils imgui::imgui glfw3 OpenGL::GL)
+
+target_link_libraries(${PROJECT_NAME} Hadronomy::cpputils imgui::imgui glfw OpenGL::GL)
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
