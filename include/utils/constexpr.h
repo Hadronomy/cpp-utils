@@ -16,7 +16,7 @@
 
 namespace utils {
 
-template<class TTest>
+template<typename TTest>
 struct is_standard {
   static constexpr bool value = std::is_fundamental<TTest>::value || std::is_same<TTest, std::string>::value;
 };
@@ -32,7 +32,7 @@ struct is_standard {
  * ShiftCopyBit<uint8_t>(1, 4) => 0x00001111;
  * @return
  */
-template<class TInt>
+template<typename TInt>
 constexpr TInt ShiftCopyBit(TInt initial, size_t amount) {
   for (int i = 0; i < amount; initial |= initial << i, ++i);
   return initial;

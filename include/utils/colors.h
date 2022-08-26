@@ -11,9 +11,6 @@
 
 #pragma once
 
-#ifndef LIB_UTILS_COLORS_
-#define LIB_UTILS_COLORS_
-
 #include <iostream>
 #include <string>
 
@@ -77,5 +74,3 @@ class Colorize {
 std::ostream &operator <<(std::ostream &out, Colorize colorize);
 
 }
-
-#endif

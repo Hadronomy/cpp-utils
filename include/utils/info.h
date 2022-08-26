@@ -4,9 +4,6 @@
 
 #pragma once
 
-#ifndef UTILS_INFO_H
-#define UTILS_INFO_H
-
 #include <string>
 
 #include "logger.h"
@@ -27,5 +24,3 @@ namespace utils {
 
 
 } // utils
-
-#endif //UTILS_INFO_H
