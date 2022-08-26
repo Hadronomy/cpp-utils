@@ -24,6 +24,7 @@ else()
 	message(STATUS "Top level project detected")
 endif()
 
+add_subdirectory(thirdparty/imgui)
 add_subdirectory(src)
 enable_testing()
 add_subdirectory(tests)
@@ -39,3 +40,5 @@ endif()
 
 # INSTALL CONFIG
 include(cmake_install_config)
+
+configure_install(${PROJECT_NAME} imgui)
