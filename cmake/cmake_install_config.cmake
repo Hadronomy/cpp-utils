@@ -1,26 +1,9 @@
+
+FUNCTION(configure_install PROJECT_NAME DEPENDS)
 # DEBUG
 set_target_properties(${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX "d")
 
 # INSTALLATION
-
-if (DEFINED CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-    message(
-            STATUS
-            "CMAKE_INSTALL_PREFIX is not set\n"
-            "Default value: ${CMAKE_INSTALL_PREFIX}\n"
-            "Will set it to /usr/local"
-    )
-    set(CMAKE_INSTALL_PREFIX
-            "/usr/local"
-            CACHE PATH "Where the library will be installed to" FORCE
-            )
-else()
-    message(
-            STATUS
-            "CMAKE_INSTALL_PREFIX was already set\n"
-            "Current value: ${CMAKE_INSTALL_PREFIX}"
-    )
-endif()
 
 file(GLOB_RECURSE PUBLIC_HEADERS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "include/*.h")
 message(STATUS "Found public headers: ${PUBLIC_HEADERS}")
@@ -39,7 +22,7 @@ foreach(header ${PUBLIC_HEADERS})
     )
 endforeach()
 
-install(TARGETS ${PROJECT_NAME}
+install(TARGETS ${PROJECT_NAME} ${DEPENDS}
         EXPORT "${PROJECT_NAME}Targets"
         PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
         INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
@@ -83,3 +66,5 @@ if(NOT TARGET uninstall)
     add_custom_target(uninstall
             COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
 endif()
+
+ENDFUNCTION()

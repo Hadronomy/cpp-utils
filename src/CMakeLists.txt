@@ -24,3 +24,7 @@ target_include_directories(
             $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
             # $<BUILD_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
+
+find_package(glfw NAMES glfw glfw3 REQUIRED)
+
+target_link_libraries(${PROJECT_NAME} glfw imgui)

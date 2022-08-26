@@ -25,7 +25,6 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_MODE")
 # FetchContent_MakeAvailable(utils)
 find_package(OpenGL REQUIRED)
 find_package(glfw NAMES glfw glfw3 REQUIRED)
-add_subdirectory(thirdparty/imgui)
 
 target_link_libraries(${PROJECT_NAME} Hadronomy::cpputils imgui::imgui glfw OpenGL::GL)
 
