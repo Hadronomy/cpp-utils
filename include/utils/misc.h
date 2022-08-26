@@ -12,9 +12,6 @@
 
 #pragma once
 
-#ifndef LIB_UTILS_MISC_
-#define LIB_UTILS_MISC_
-
 #include <limits>
 #include <string>
 
@@ -104,6 +101,21 @@ bool IsAlpha(const char input_char);
  */
 bool IsUppercase(const char input_char);
 
-}  // namespace utils
+/**
+ * @brief
+ * Repeats the process of shifting and copying the
+ * given bits an specified amount of times
+ * @tparam TInt
+ * @param initial The bits to shift and copy
+ * @param amount The amount of times to shift and copy
+ * @example
+ * ShiftCopyBit<uint8_t>(1, 4) => 0x00001111;
+ * @return
+ */
+template<class TInt>
+constexpr TInt ShiftCopyBit(TInt initial, size_t amount) {
+  for (int i = 0; i < amount; initial |= initial << i, ++i);
+  return initial;
+}
 
-#endif //  LIB_UTILS_H
+}  // namespace utils
