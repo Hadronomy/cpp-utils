@@ -12,9 +12,6 @@
 
 #pragma once
 
-#ifndef LIB_UTILS_MISC_
-#define LIB_UTILS_MISC_
-
 #include <limits>
 #include <string>
 
@@ -23,7 +20,7 @@ namespace utils {
 struct DefaultType {
  public:
   template<typename T>
-  operator T() const { return T(); }
+  operator T() const { return T(); } // NOLINT(google-explicit-constructor)
 };
 
 const DefaultType kDefault = DefaultType();
@@ -105,5 +102,3 @@ bool IsAlpha(const char input_char);
 bool IsUppercase(const char input_char);
 
 }  // namespace utils
-
-#endif //  LIB_UTILS_H

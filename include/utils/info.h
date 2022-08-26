@@ -4,10 +4,9 @@
 
 #pragma once
 
-#ifndef UTILS_INFO_H
-#define UTILS_INFO_H
-
 #include <string>
+
+#include "logger.h"
 
 namespace utils {
 
@@ -23,6 +22,5 @@ namespace utils {
 #define FILE_NAME (__builtin_strrchr(__FILE__, '/') ? __builtin_strrchr(__FILE__, '/') + 1 : __FILE__)
 #define SFUNCTION (__builtin_strrchr(UTILS_FUNCSIGN, ' ') ? __builtin_strrchr(UTILS_FUNCSIGN, ' ') + 1 : UTILS_FUNCSIGN)
 
-} // utils
 
-#endif //UTILS_INFO_H
+} // utils

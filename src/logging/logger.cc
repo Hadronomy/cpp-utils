@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-#include "utils/logging/logger.h"
+#include "utils/logger.h"
 
 namespace utils {
 
@@ -18,7 +18,7 @@ Logger Logger::GetDefault() {
 
 void Logger::Log(const LoggerMessage &msg) {
   for (auto& transport : transports_) {
-    transport->Log(msg.str());
+    transport->Log(msg);
   }
 }
 
