@@ -41,4 +41,4 @@ endif()
 # INSTALL CONFIG
 include(cmake_install_config)
 
-configure_install(${PROJECT_NAME} imgui)
+configure_install(PROJECT ${PROJECT_NAME})

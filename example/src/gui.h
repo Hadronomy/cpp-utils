@@ -4,6 +4,7 @@
 
 namespace example {
 
+void Update();
 int RenderGUI();
 void ShowDocking();
 void ShowRightPanel();

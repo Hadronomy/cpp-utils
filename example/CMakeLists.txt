@@ -30,5 +30,5 @@ target_link_libraries(${PROJECT_NAME} Hadronomy::cpputils imgui::imgui glfw Open
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
-                ${CMAKE_CURRENT_SOURCE_DIR}/data
-                ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/data)
+        ${CMAKE_CURRENT_SOURCE_DIR}/assets
+                ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/assets)

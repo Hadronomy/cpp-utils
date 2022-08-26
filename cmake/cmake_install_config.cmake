@@ -1,70 +1,77 @@
 
-FUNCTION(configure_install PROJECT_NAME DEPENDS)
-# DEBUG
-set_target_properties(${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX "d")
+FUNCTION(configure_install)
+    set(prefix INS)
+    set(flags " ")
+    set(singleValues PROJECT)
+    set(multiValues DEPENDS)
 
-# INSTALLATION
+    include(CMakeParseArguments)
+    cmake_parse_arguments(${prefix} ${flags} ${singleValues} ${multiValues} ${ARGN})
+    # DEBUG
+    set_target_properties(${INS_PROJECT} PROPERTIES DEBUG_POSTFIX "d")
 
-file(GLOB_RECURSE PUBLIC_HEADERS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "include/*.h")
-message(STATUS "Found public headers: ${PUBLIC_HEADERS}")
+    # INSTALLATION
 
-# set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${PUBLIC_HEADERS}")
+    file(GLOB_RECURSE PUBLIC_HEADERS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "include/*.h")
+    message(STATUS "Found public headers: ${PUBLIC_HEADERS}")
 
-include(GNUInstallDirs)
+    # set_target_properties(${INS_PROJECT} PROPERTIES PUBLIC_HEADER "${PUBLIC_HEADERS}")
 
-foreach(header ${PUBLIC_HEADERS})
-    file(REAL_PATH ${header} absolute_header_path)
-    file(RELATIVE_PATH header_path "${CMAKE_CURRENT_SOURCE_DIR}/include" "${absolute_header_path}")
-    get_filename_component(header_directory_path "${header_path}" DIRECTORY)
-    install(
-            FILES ${header}
-            DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${header_directory_path}"
-    )
-endforeach()
+    include(GNUInstallDirs)
 
-install(TARGETS ${PROJECT_NAME} ${DEPENDS}
-        EXPORT "${PROJECT_NAME}Targets"
-        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
-        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    foreach(header ${PUBLIC_HEADERS})
+        file(REAL_PATH ${header} absolute_header_path)
+        file(RELATIVE_PATH header_path "${CMAKE_CURRENT_SOURCE_DIR}/include" "${absolute_header_path}")
+        get_filename_component(header_directory_path "${header_path}" DIRECTORY)
+        install(
+                FILES ${header}
+                DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${header_directory_path}"
         )
+    endforeach()
 
-install(EXPORT "${PROJECT_NAME}Targets"
-        FILE "${PROJECT_NAME}Targets.cmake"
-        NAMESPACE ${PROJECT_NAMESPACE}::
-        DESTINATION cmake)
+    install(TARGETS ${INS_PROJECT} ${INS_DEPENDS}
+            EXPORT "${INS_PROJECT}Targets"
+            PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${INS_PROJECT}
+            INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+            )
 
-include(CMakePackageConfigHelpers)
+    install(EXPORT "${INS_PROJECT}Targets"
+            FILE "${INS_PROJECT}Targets.cmake"
+            NAMESPACE ${PROJECT_NAMESPACE}::
+            DESTINATION cmake)
 
-write_basic_package_version_file(
-        "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
-        VERSION "${version}"
-        COMPATIBILITY AnyNewerVersion
-)
+    include(CMakePackageConfigHelpers)
 
-set(CMAKE_CONFIG_DIR cmake)
+    write_basic_package_version_file(
+            "${CMAKE_CURRENT_BINARY_DIR}/${INS_PROJECT}ConfigVersion.cmake"
+            VERSION "${version}"
+            COMPATIBILITY AnyNewerVersion
+    )
 
-configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/${CMAKE_CONFIG_DIR}/Config.cmake"
-        "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-        INSTALL_DESTINATION cmake)
+    set(CMAKE_CONFIG_DIR cmake)
 
-install(FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
-        "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
-        DESTINATION cmake)
+    configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/${CMAKE_CONFIG_DIR}/Config.cmake"
+            "${CMAKE_CURRENT_BINARY_DIR}/${INS_PROJECT}Config.cmake"
+            INSTALL_DESTINATION cmake)
 
-export(EXPORT "${PROJECT_NAME}Targets"
-        FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}Targets.cmake"
-        NAMESPACE ${PROJECT_NAMESPACE}::)
+    install(FILES
+            "${CMAKE_CURRENT_BINARY_DIR}/${INS_PROJECT}Config.cmake"
+            "${CMAKE_CURRENT_BINARY_DIR}/${INS_PROJECT}ConfigVersion.cmake"
+            DESTINATION cmake)
 
-# uninstall target
-if(NOT TARGET uninstall)
-    configure_file(
-            "${CMAKE_CURRENT_SOURCE_DIR}/${CMAKE_CONFIG_DIR}/cmake_uninstall.cmake"
-            "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
-            IMMEDIATE @ONLY)
+    export(EXPORT "${INS_PROJECT}Targets"
+            FILE "${CMAKE_CURRENT_BINARY_DIR}/cmake/${INS_PROJECT}Targºets.cmake"
+            NAMESPACE ${PROJECT_NAMESPACE}::)
 
-    add_custom_target(uninstall
-            COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
-endif()
+    # uninstall target
+    if(NOT TARGET uninstall)
+        configure_file(
+                "${CMAKE_CURRENT_SOURCE_DIR}/${CMAKE_CONFIG_DIR}/cmake_uninstall.cmake"
+                "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
+                IMMEDIATE @ONLY)
+
+        add_custom_target(uninstall
+                COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
+    endif()
 
 ENDFUNCTION()

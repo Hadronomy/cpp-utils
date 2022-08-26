@@ -12,6 +12,10 @@
 
 namespace example {
 
+constexpr auto ColorFromBytes = [](uint8_t r, uint8_t g, uint8_t b) {
+  return ImVec4((float) r / 255.0f, (float) g / 255.0f, (float) b / 255.0f, 1.0f);
+};
+
 static void glfw_error_callback(int error, const char *description) {
   LOG(LFATAL) << "glfw Error " << error << ": " << description;
 }
@@ -76,33 +80,9 @@ int RenderGUI() {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
-    ShowDocking();
-    ShowRightPanel();
 
-    if (ImGui::Begin("TTY")) {
-      static char tty_path[128] = "/dev/pts/0";
-      ImGui::Text("TTY");
-      ImGui::SameLine();
-      ImGui::InputText("##tty_path", tty_path, sizeof(tty_path));
+    Update();
 
-      static char msg[128] = "";
-      ImGui::Text("Message");
-      ImGui::SameLine();
-      ImGui::InputText("##tty_msg", msg, sizeof(msg));
-
-      static std::fstream tty;
-      if (ImGui::Button("Connect")) {
-        tty.close();
-        tty.open(tty_path);
-      }
-      ImGui::SameLine();
-      if (ImGui::Button("Send") && tty.is_open()) {
-        tty << msg << std::endl;
-        tty.flush();
-      }
-
-      ImGui::End();
-    }
     // Rendering
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -126,6 +106,40 @@ int RenderGUI() {
   return 0;
 }
 
+/**
+ * App Update loop
+ */
+void Update() {
+  ShowDocking();
+  ShowRightPanel();
+
+  if (ImGui::Begin("TTY")) {
+    static char tty_path[128] = "/dev/pts/0";
+    auto id = ImGui::GetWindowDockID();
+    ImGui::Text("TTY");
+    ImGui::SameLine();
+    ImGui::InputText("##tty_path", tty_path, sizeof(tty_path));
+
+    static char msg[128] = "";
+    ImGui::Text("Message");
+    ImGui::SameLine();
+    ImGui::InputText("##tty_msg", msg, sizeof(msg));
+
+    static std::fstream tty;
+    if (ImGui::Button("Connect")) {
+      tty.close();
+      tty.open(tty_path);
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("Send") && tty.is_open()) {
+      tty << msg << std::endl;
+      tty.flush();
+    }
+
+    ImGui::End();
+  }
+}
+
 void ShowDocking() {
   ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
   const ImGuiViewport *viewport = ImGui::GetMainViewport();
@@ -142,15 +156,19 @@ void ShowDocking() {
   ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
   if (ImGui::Begin("Dockspace", nullptr, window_flags)) {
     ImGui::PopStyleVar();
-    ImGui::BeginMenuBar();
-    ImGui::Text("Example");
-    ImGui::EndMenuBar();
+    if (ImGui::BeginMainMenuBar()) {
+      if (ImGui::BeginMenu("Tools")) {
+        if (ImGui::MenuItem("Profiler")) {}
+        ImGui::EndMenu();
+      }
+      ImGui::EndMainMenuBar();
+    }
     auto dockspace_id = ImGui::GetID("Dockspace");
     ImGui::DockSpace(dockspace_id);
-    ImGui::ShowDemoWindow();
     ImGui::PopStyleVar(2);
     ImGui::End();
   }
+  ImGui::ShowDemoWindow();
 }
 
 void ShowRightPanel() {
@@ -160,7 +178,7 @@ void ShowRightPanel() {
 }
 
 void SetupTheme(const ImGuiIO &io) {
-  io.Fonts->AddFontFromFileTTF("data/Fonts/Ruda-VariableFont_wght.ttf", 16.0f);
+  io.Fonts->AddFontFromFileTTF("assets/Fonts/Ruda-VariableFont_wght.ttf", 16.0f);
 
   ImGuiWindowClass windowClass;
   windowClass.ViewportFlagsOverrideSet |= ImGuiDockNodeFlags_NoWindowMenuButton;
@@ -173,10 +191,6 @@ void SetupTheme(const ImGuiIO &io) {
   style.GrabRounding = 1.00f;
   style.WindowPadding = ImVec2(10.0f, 8.00f);
   style.WindowTitleAlign = ImVec2(0.50f, 0.50f);
-
-  constexpr auto ColorFromBytes = [](uint8_t r, uint8_t g, uint8_t b) {
-    return ImVec4((float) r / 255.0f, (float) g / 255.0f, (float) b / 255.0f, 1.0f);
-  };
 
   ImVec4 *colors = style.Colors;
   const ImVec4 darkBgColor = ColorFromBytes(25, 25, 25);
