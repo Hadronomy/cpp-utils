@@ -20,7 +20,7 @@ namespace utils {
 struct DefaultType {
  public:
   template<typename T>
-  operator T() const { return T(); }
+  operator T() const { return T(); } // NOLINT(google-explicit-constructor)
 };
 
 const DefaultType kDefault = DefaultType();
