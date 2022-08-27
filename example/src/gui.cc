@@ -4,6 +4,9 @@
 #include <utils/logger.h>
 #include <utils/hourglass.h>
 
+#define UTILS_PROFILE
+#include <utils/instrumentation.h>
+
 #include <GLFW/glfw3.h>
 #define ImDrawIdx unsigned int
 #include <imgui.h>
@@ -32,6 +35,7 @@ static void glfw_error_callback(int error, const char *description) {
  * @return
  */
 int RenderGUI() {
+  UTILS_PROFILE_FUNCTION();
   utils::Hourglass::Start();
   // Window setup
   glfwSetErrorCallback(glfw_error_callback);
@@ -83,28 +87,7 @@ int RenderGUI() {
   SetupTheme(io);
   LOG(LDEBUG) << "Initialized\t" << utils::Hourglass::Stop().Elapsed() << "ms" << std::endl;
   while (!glfwWindowShouldClose(window)) {
-    glfwPollEvents();
-    // Start the Dear ImGui frame
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplGlfw_NewFrame();
-    ImGui::NewFrame();
-
-    Update();
-
-    // Rendering
-    ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    // Update and Render additional Platform Windows
-    // (Platform functions may change the current OpenGL context, so we save/restore it to make it easier to paste this code elsewhere.
-    //  For this specific demo app we could also call glfwMakeContextCurrent(window) directly)
-    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
-      GLFWwindow *backup_current_context = glfwGetCurrentContext();
-      ImGui::UpdatePlatformWindows();
-      ImGui::RenderPlatformWindowsDefault();
-      glfwMakeContextCurrent(backup_current_context);
-    }
-
-    glfwSwapBuffers(window);
+    Update(window, io);
   }
   ImGui_ImplOpenGL3_Shutdown();
   ImGui_ImplGlfw_Shutdown();
@@ -118,7 +101,14 @@ int RenderGUI() {
 /**
  * App Update loop
  */
-void Update() {
+void Update(GLFWwindow* window, ImGuiIO& io) {
+  UTILS_PROFILE_FUNCTION();
+  glfwPollEvents();
+  // Start the Dear ImGui frame
+  ImGui_ImplOpenGL3_NewFrame();
+  ImGui_ImplGlfw_NewFrame();
+  ImGui::NewFrame();
+
   ShowDocking();
   ShowRightPanel();
 
@@ -147,9 +137,29 @@ void Update() {
 
     ImGui::End();
   }
+  // Rendering
+  ImGui::Render();
+  ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+  // Update and Render additional Platform Windows
+  // (Platform functions may change the current OpenGL context, so we save/restore it to make it easier to paste this code elsewhere.
+  //  For this specific demo app we could also call glfwMakeContextCurrent(window) directly)
+  if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+    GLFWwindow *backup_current_context = glfwGetCurrentContext();
+    ImGui::UpdatePlatformWindows();
+    ImGui::RenderPlatformWindowsDefault();
+    glfwMakeContextCurrent(backup_current_context);
+  }
+
+  glfwSwapBuffers(window);
+}
+
+void OpenProfiler() {
+  UTILS_PROFILE_FUNCTION();
+  std::this_thread::sleep_for(std::chrono::duration<double, std::milli>(100));
 }
 
 void ShowDocking() {
+  UTILS_PROFILE_FUNCTION();
   ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
   const ImGuiViewport *viewport = ImGui::GetMainViewport();
   // Setup fullscreen style
@@ -167,7 +177,9 @@ void ShowDocking() {
     ImGui::PopStyleVar();
     if (ImGui::BeginMainMenuBar()) {
       if (ImGui::BeginMenu("Tools")) {
-        if (ImGui::MenuItem("Profiler")) {}
+        if (ImGui::MenuItem("Profiler")) {
+          OpenProfiler();
+        }
         ImGui::EndMenu();
       }
       ImGui::EndMainMenuBar();

@@ -2,9 +2,12 @@
 
 #include <imgui.h>
 
+class GLFWwindow;
+class ImGuiIO;
+
 namespace example {
 
-void Update();
+void Update(GLFWwindow* window, ImGuiIO& io);
 int RenderGUI();
 void ShowDocking();
 void ShowRightPanel();
