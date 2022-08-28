@@ -12,8 +12,11 @@ set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/cmake;${
 set(META_PROJECT_NAME c++utils)
 set(META_PROJECT_DESCRIPTION A lovely description)
 set(META_PROJECT_VARNAME CPP_UTILS)
-set(META_APP_NAME "C++ Utils")
+set(META_APP_NAME  "C++ Utils")
 set(META_APP_AUTHOR "Hadronomy")
+
+# Conan
+include(conan_paths)
 
 if (NOT CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 	message(STATUS "This project has a top-level one called [${CMAKE_PROJECT_NAME}]")
