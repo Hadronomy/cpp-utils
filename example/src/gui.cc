@@ -1,9 +1,15 @@
+#include <thread>
+#include <cmath>
+
 #include <utils/logger.h>
 #include <utils/hourglass.h>
 
 #include <GLFW/glfw3.h>
+#define ImDrawIdx unsigned int
 #include <imgui.h>
 #include <imgui_internal.h>
+#include <implot.h>
+#include <implot_internal.h>
 
 #include "imgui_impl_glfw.h"
 #include "imgui_stdlib.h"
@@ -60,6 +66,7 @@ int RenderGUI() {
   // Setup DearImGui
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
+  ImPlot::CreateContext();
   ImGuiIO &io = ImGui::GetIO();
   (void) io;
   io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
@@ -101,6 +108,7 @@ int RenderGUI() {
   }
   ImGui_ImplOpenGL3_Shutdown();
   ImGui_ImplGlfw_Shutdown();
+  ImPlot::DestroyContext();
   ImGui::DestroyContext();
   glfwDestroyWindow(window);
   glfwTerminate();
