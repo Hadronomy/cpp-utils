@@ -6,7 +6,7 @@ project(cpputils
 	LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(PROJECT_SHORTNAME utils)
-set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/cmake;${CMAKE_BINARY_DIR}")
 
 # Metadata
 set(META_PROJECT_NAME c++utils)
@@ -15,16 +15,12 @@ set(META_PROJECT_VARNAME CPP_UTILS)
 set(META_APP_NAME "C++ Utils")
 set(META_APP_AUTHOR "Hadronomy")
 
-# 3rd party libraries
-include(3rdParty)
-
 if (NOT CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 	message(STATUS "This project has a top-level one called [${CMAKE_PROJECT_NAME}]")
 else()
 	message(STATUS "Top level project detected")
 endif()
 
-add_subdirectory(thirdparty/imgui)
 add_subdirectory(src)
 enable_testing()
 add_subdirectory(tests)

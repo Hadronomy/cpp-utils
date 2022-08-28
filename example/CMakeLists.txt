@@ -23,10 +23,13 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_MODE")
 # )
 #
 # FetchContent_MakeAvailable(utils)
+
 find_package(OpenGL REQUIRED)
 find_package(glfw NAMES glfw glfw3 REQUIRED)
+find_package(imgui REQUIRED)
+# find_package(implot REQUIRED)
 
-target_link_libraries(${PROJECT_NAME} Hadronomy::cpputils imgui::imgui glfw OpenGL::GL)
+target_link_libraries(${PROJECT_NAME} Hadronomy::cpputils glfw OpenGL::GL imgui::imgui)
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
