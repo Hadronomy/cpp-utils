@@ -1,5 +1,6 @@
 [requires]
 imgui/cci.20220621+1.88.docking
+implot/0.13
 glfw/3.3.8
 glad/0.1.36
 
