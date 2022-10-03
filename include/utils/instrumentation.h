@@ -64,6 +64,7 @@ class BaseInstrumentor {
    * @param file_path File where to save the session profile
    */
   void BeginSession(const std::string &name, const std::string &file_path);
+
   /**
    * Ends the current instrumentation session
    */
@@ -74,12 +75,14 @@ class BaseInstrumentor {
    * Writes the header of the profile session file
    */
   inline void WriteHeader() { GetDerivedPointer()->WriteHeader(); }
+
   /**
    * VIRTUAL
    * Writes a new profile to the profile session file
    * @param result The profile to write
    */
   inline void WriteProfile(const ProfileResult& result) { GetDerivedPointer()->WriteProfile(result); }
+
   /**
    * VIRTUAL
    * Writes the footer of the profile session file
