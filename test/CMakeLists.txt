@@ -1,4 +1,5 @@
 project(${CMAKE_PROJECT_NAME})
+enable_testing()
 
 set(EXE_NAME ${PROJECT_SHORTNAME}_test)
 add_executable(${EXE_NAME})

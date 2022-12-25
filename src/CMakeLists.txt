@@ -16,7 +16,15 @@ if (DEFINED SOURCES)
 endif()
 
 target_include_directories(
-        ${PROJECT_NAME}
-        INTERFACE
-            $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+  ${PROJECT_NAME}
+  INTERFACE
+      $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
 )
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
+  PUBLIC_HEADERS_DIR "${CMAKE_SOURCE_DIR}/include"
+)
+
+include(cmake_install_config)
+
+configure_install_export(${PROJECT_NAME})

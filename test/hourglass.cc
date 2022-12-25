@@ -2,7 +2,7 @@
 #include <chrono>
 
 #include <gtest/gtest.h>
-#include <utils/hourglass.h>
+#include <toffee/hourglass.h>
 
 TEST(Hourglass, ReportsMilliseconds) {
   toffee::Hourglass::Start();
