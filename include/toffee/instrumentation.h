@@ -53,7 +53,7 @@ struct InstrumentationSession {
  */
 template<typename TInstrumentator>
 class BaseInstrumentor {
-public:
+ public: 
   BaseInstrumentor() : current_session_(nullptr), output_stream_(), profile_count_(0) {
     AssertIsInheritor();
   }
@@ -98,12 +98,7 @@ public:
     return instance;
   }
 
-protected:
-  InstrumentationSession *current_session_;
-  std::ofstream output_stream_;
-  int profile_count_;
-
-private:
+ protected:
   constexpr void AssertIsInheritor() {
     static_assert(std::is_base_of<BaseInstrumentor, TInstrumentator>::value,
                   "Invalid TInstrumentator, the type is not child of the BaseInstrumentor class");
@@ -112,6 +107,10 @@ private:
   constexpr TInstrumentator* GetDerivedPointer() {
     return static_cast<TInstrumentator*>(this);
   }
+
+  InstrumentationSession *current_session_;
+  std::ofstream output_stream_;
+  int profile_count_;
 };
 
 template<typename TInstrumentator>
@@ -173,7 +172,7 @@ inline void ChromeInstrumentor::WriteFooter() {
  * Times a scope and sends the profile to the Instrumentor
  */
 class InstrumentationTimer {
-public:
+ public:
   explicit InstrumentationTimer(const char* name) : name_(name), stopped_(false) {
     start_timepoint_ = Clock::now();
   }
@@ -184,7 +183,7 @@ public:
 
   void Stop();
 
-private:
+ private:
   using TimePoint = std::chrono::time_point<std::chrono::high_resolution_clock>;
   using Clock = std::chrono::high_resolution_clock;
 

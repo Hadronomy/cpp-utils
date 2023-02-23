@@ -35,9 +35,9 @@ class Hourglass {
   std::chrono::time_point<clock_t> end_;
 };
 
-std::optional<std::stack<Hourglass>> Hourglass::timers_;
+inline std::optional<std::stack<Hourglass>> Hourglass::timers_;
 
-std::stack<Hourglass>& Hourglass::GetTimers() {
+inline std::stack<Hourglass>& Hourglass::GetTimers() {
   if (!timers_.has_value())
     timers_ = std::stack<Hourglass>();
   return timers_.value();
